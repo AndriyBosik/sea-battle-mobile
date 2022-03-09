@@ -1,0 +1,28 @@
+name: sea_battle_repository
+description: A new Flutter package project.
+version: 0.0.1
+publish_to: 'none'
+homepage:
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sea_battle_entity:
+    path: ../sea_battle_entity
+  sea_battle_model:
+    path: ../sea_battle_model
+  sea_battle_mapper:
+    path: ../sea_battle_mapper
+  sea_battle_api:
+    path: ../sea_battle_api
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:
