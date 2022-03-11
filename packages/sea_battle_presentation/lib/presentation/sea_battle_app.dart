@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class SeaBattleApp extends StatelessWidget {
-  final Widget _home;
+  final Widget _body;
 
   const SeaBattleApp({
     Key? key,
-    required Widget home
+    required Widget body
   }):
-    _home = home,
+    _body = body,
     super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: _home
+      debugShowCheckedModeBanner: false,
+      home: _body
     );
   }
 }

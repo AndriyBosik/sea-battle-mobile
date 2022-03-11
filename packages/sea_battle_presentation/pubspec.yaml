@@ -11,11 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^1.0.0
   sea_battle_model:
     path: ../sea_battle_model
   sea_battle_domain:
@@ -24,5 +19,15 @@ dev_dependencies:
     path: ../sea_battle_mapper
   sea_battle_repository:
     path: ../sea_battle_repository
+  google_fonts: ^2.3.1
+  simple_animations: ^4.0.1
+  flutter_bloc: ^8.0.1
+  equatable: ^2.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 flutter:
+  assets:
+    - assets/

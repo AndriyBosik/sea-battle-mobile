@@ -1,0 +1,1 @@
+class TooManyStagesException implements Exception {}
