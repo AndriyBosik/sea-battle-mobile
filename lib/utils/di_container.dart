@@ -11,7 +11,7 @@ import 'package:sea_battle_mapper/mapper/implementation/user_entity_to_user_mode
 import 'package:sea_battle_mapper/mapper/implementation/user_model_to_user_mapper.dart';
 import 'package:sea_battle_model/model/user_model.dart';
 import 'package:sea_battle_presentation/presentation/sea_battle_app.dart';
-import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
+import 'package:sea_battle_presentation/presentation/page/start/start_page.dart';
 import 'package:sea_battle_presentation/service/abstraction/user_service.dart';
 import 'package:sea_battle_presentation/service/implementation/default_user_service.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';
@@ -56,11 +56,10 @@ class DIContainer {
       userRepository: userRepository,
       userMapper: userModelToUserMapper);
     
-    final HomePage homePage = HomePage(
-      userService: userService);
+    final StartPage startPage = StartPage();
 
     final SeaBattleApp seaBattleApp = SeaBattleApp(
-      home: homePage
+      body: startPage
     );
 
     return {
@@ -71,7 +70,7 @@ class DIContainer {
       Mapper<UserModel?, User?>: userModelToUserMapper,
       UserRepository: userRepository,
       UserService: userService,
-      HomePage: homePage,
+      StartPage: startPage,
       SeaBattleApp: seaBattleApp
     };
   }

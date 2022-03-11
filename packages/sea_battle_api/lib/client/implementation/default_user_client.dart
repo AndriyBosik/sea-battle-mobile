@@ -22,7 +22,7 @@ class DefaultUserClient implements UserClient {
 
   @override
   Future<UserEntity?> getUserByNickname(String nickname) async {
-    final Uri url = Uri.parse("$_apiUrl/users/$nickname");
+    final Uri url = Uri.parse("$_apiUrl/api/users/$nickname");
 
     final response = await _httpClient.get(url);
     if (response .statusCode != 200) {
