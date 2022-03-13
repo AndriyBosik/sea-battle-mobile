@@ -3,7 +3,14 @@ import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BoardInput extends StatelessWidget {
-  const BoardInput({Key? key}) : super(key: key);
+  final TextEditingController _textController;
+
+  const BoardInput({
+    Key? key,
+    required TextEditingController textController
+  }):
+    _textController = textController,
+    super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,8 @@ class BoardInput extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(
               50, 5, 50, 0,
             ),
-            child: TextField(
+            child: TextFormField(
+              controller: _textController,
               style: GoogleFonts.getFont(
                 "Architects Daughter",
                 fontSize: 30,
