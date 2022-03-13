@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_presentation/logic/cubit/message_cubit.dart';
 import 'package:sea_battle_presentation/logic/cubit/user_profile_loading_cubit.dart';
 import 'package:sea_battle_presentation/presentation/component/board_input/board_input.dart';
 import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
 
 class UserForm extends StatelessWidget {
-  const UserForm({Key? key}) : super(key: key);
+  final MessageCubit _messageCubit;
+
+  const UserForm({
+    Key? key,
+    required MessageCubit messageCubit
+  }):
+    _messageCubit = messageCubit,
+    super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +31,13 @@ class UserForm extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(userProfileLoadingCubit: UserProfileLoadingCubit()) // TODO Make DI
-                        )
-                      );
+                      _messageCubit.newMessage("Invalid nickname");
+                      return;
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => HomePage(userProfileLoadingCubit: UserProfileLoadingCubit()) // TODO Make DI
+                      //   )
+                      // );
                     },
                     child: Text(
                       "Play".toUpperCase(),
