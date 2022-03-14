@@ -1,4 +1,4 @@
-import 'package:sea_battle_presentation/logic/state/home_page/abstract_home_page_state.dart';
+import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
 
 class HomePageLoadingState extends AbstractHomePageState {
   final double percentageValue;

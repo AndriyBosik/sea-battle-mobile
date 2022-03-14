@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:sea_battle/utils/di_container.dart';
-import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
 import 'package:sea_battle_presentation/presentation/sea_battle_app.dart';
 
 void main() async {

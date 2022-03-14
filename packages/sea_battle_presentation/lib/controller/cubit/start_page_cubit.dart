@@ -2,11 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_context_service.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_domain/module.dart';
-import 'package:sea_battle_presentation/logic/state/start_page/abstract_start_page_state.dart';
-import 'package:sea_battle_presentation/logic/state/start_page/start_page_initial_state.dart';
-import 'package:sea_battle_presentation/logic/state/start_page/start_page_state.dart';
-import 'package:sea_battle_presentation/logic/state/start_page/start_page_successful_state.dart';
-import 'package:sea_battle_presentation/logic/state/start_page/start_page_user_creating_state.dart';
+import 'package:sea_battle_presentation/controller/state/start_page/abstract_start_page_state.dart';
+import 'package:sea_battle_presentation/controller/state/start_page/start_page_initial_state.dart';
+import 'package:sea_battle_presentation/controller/state/start_page/start_page_state.dart';
+import 'package:sea_battle_presentation/controller/state/start_page/start_page_successful_state.dart';
+import 'package:sea_battle_presentation/controller/state/start_page/start_page_user_creating_state.dart';
 
 class StartPageCubit extends Cubit<AbstractStartPageState> {
   final UserService _userService;

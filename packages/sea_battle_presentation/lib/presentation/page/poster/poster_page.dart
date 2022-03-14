@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_context_service.dart';
 import 'package:sea_battle_presentation/const/app_routes.dart';
-import 'package:sea_battle_presentation/logic/cubit/poster_page_cubit.dart';
-import 'package:sea_battle_presentation/logic/state/poster_page/abstract_poster_page_state.dart';
-import 'package:sea_battle_presentation/logic/state/poster_page/poster_page_user_found_state.dart';
-import 'package:sea_battle_presentation/logic/state/poster_page/poster_page_user_not_found_state.dart';
+import 'package:sea_battle_presentation/controller/cubit/poster_page_cubit.dart';
+import 'package:sea_battle_presentation/controller/state/poster_page/abstract_poster_page_state.dart';
+import 'package:sea_battle_presentation/controller/state/poster_page/poster_page_user_found_state.dart';
+import 'package:sea_battle_presentation/controller/state/poster_page/poster_page_user_not_found_state.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class PosterPage extends StatelessWidget {

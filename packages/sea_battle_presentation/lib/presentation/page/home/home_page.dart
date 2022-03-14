@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sea_battle_presentation/logic/cubit/home_page_cubit.dart';
-import 'package:sea_battle_presentation/logic/state/home_page/abstract_home_page_state.dart';
-import 'package:sea_battle_presentation/logic/state/home_page/home_page_loading_state.dart';
+import 'package:sea_battle_presentation/controller/cubit/home_page_cubit.dart';
+import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
+import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
 import 'package:sea_battle_presentation/presentation/component/app_background/app_background.dart';
 import 'package:sea_battle_presentation/presentation/component/ship_progress_bar/ship_progress_bar.dart';
 
