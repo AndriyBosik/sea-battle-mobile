@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sea_battle_business_logic/service/abstraction/user_context_service.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_domain/module.dart';
 import 'package:sea_battle_presentation/logic/state/start_page/abstract_start_page_state.dart';
@@ -9,11 +10,14 @@ import 'package:sea_battle_presentation/logic/state/start_page/start_page_user_c
 
 class StartPageCubit extends Cubit<AbstractStartPageState> {
   final UserService _userService;
+  final UserContextService _userContextService;
 
   StartPageCubit({
-    required UserService userService
+    required UserService userService,
+    required UserContextService userContextService
   }):
     _userService = userService,
+    _userContextService = userContextService,
     super(StartPageInitialState());
 
   Future<void> validateNickname(String? nickname) async {
@@ -27,8 +31,9 @@ class StartPageCubit extends Cubit<AbstractStartPageState> {
         message: error
       ));
     } else {
+      await _userContextService.storeUser(nickname!);
       emit(StartPageSuccessfulState(
-        nickname: nickname ?? ""
+        nickname: nickname
       ));
     }
   }

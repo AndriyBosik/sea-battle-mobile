@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sea_battle_business_logic/service/abstraction/user_context_service.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_presentation/const/app_routes.dart';
 import 'package:sea_battle_presentation/logic/cubit/start_page_cubit.dart';
@@ -13,19 +14,23 @@ import 'package:sea_battle_presentation/presentation/component/user_form/user_fo
 
 class StartPage extends StatelessWidget {
   final UserService _userService;
+  final UserContextService _userContextService;
 
   const StartPage({
     Key? key,
-    required UserService userService
+    required UserService userService,
+    required UserContextService userContextService
   }):
     _userService = userService,
+    _userContextService = userContextService,
     super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<StartPageCubit>(
       create: (_) => StartPageCubit(
-        userService: _userService
+        userService: _userService,
+        userContextService: _userContextService
       ),
       child: BlocConsumer<StartPageCubit, AbstractStartPageState>(
         listener: (context, state) {

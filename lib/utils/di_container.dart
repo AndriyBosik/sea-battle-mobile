@@ -1,17 +1,24 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:localstore/localstore.dart';
 import 'package:sea_battle_api/module.dart';
 import 'package:sea_battle_business_logic/module.dart';
+import 'package:sea_battle_business_logic/service/abstraction/user_context_service.dart';
+import 'package:sea_battle_business_logic/service/implementation/default_user_context_service.dart';
 import 'package:sea_battle_domain/module.dart';
 import 'package:sea_battle_entity/module.dart';
+import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
 import 'package:sea_battle_mapper/module.dart';
 import 'package:sea_battle_model/model/user_model.dart';
+import 'package:sea_battle_presentation/presentation/page/poster/poster_page.dart';
 import 'package:sea_battle_presentation/presentation/page/error/error_page.dart';
 import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
+import 'package:sea_battle_presentation/presentation/page/start/start_page.dart';
 import 'package:sea_battle_presentation/presentation/sea_battle_app.dart';
 import 'package:sea_battle_presentation/router/app_router.dart';
-import 'package:sea_battle_presentation/presentation/page/start/start_page.dart';
+import 'package:sea_battle_repository/repository/abstraction/user_context_repository.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';
+import 'package:sea_battle_repository/repository/implementation/default_user_context_repository.dart';
 import 'package:sea_battle_repository/repository/implementation/default_user_repository.dart';
 
 class DIContainer {
@@ -43,6 +50,9 @@ class DIContainer {
     /* httpClient */
     final httpClient = http.Client();
 
+    /* Localstore */
+    Localstore db = Localstore.instance;
+
     /* JsonDeserializers */
     final JsonService<UserEntity> userJsonDeserializer = UserJsonService();
     
@@ -52,11 +62,17 @@ class DIContainer {
       httpClient: httpClient,
       userJsonService: userJsonDeserializer);
     
+    /* LocalStorage */
+    final UserContext userContext = DefaultUserContext(
+      db: db);
+
     /* Repositories */
     final UserRepository userRepository = DefaultUserRepository(
       userEntityToUserModelMapper: userEntityToUserModelMapper,
       userModelToUserEntityMapper: userModelToUserEntityMapper,
       userClient: userClient);
+    final UserContextRepository userContextRepository = DefaultUserContextRepository(
+      userContext: userContext);
     
     /* Validators */
     final Validator<User> userValidator = UserValidator();
@@ -65,8 +81,9 @@ class DIContainer {
     final UserService userService = DefaultUserService(
       userValidator: userValidator,
       userToUserModelMapper: userToUserModelMapper,
-      userRepository: userRepository,
-    );
+      userRepository: userRepository);
+    final UserContextService userContextService = DefaultUserContextService(
+      userContextRepository: userContextRepository);
 
     /* Pages */
     const HomePage homePage = HomePage();
@@ -75,10 +92,14 @@ class DIContainer {
 
     final StartPage startPage = StartPage(
       userService: userService,
-    );
+      userContextService: userContextService);
+    
+    final PosterPage posterPage = PosterPage(
+      userContextService: userContextService);
 
     /* AppRouter */
     final AppRouter appRouter = AppRouter(
+      posterPage: posterPage,
       errorPage: errorPage,
       homePage: homePage,
       startPage: startPage
@@ -87,13 +108,14 @@ class DIContainer {
     /* App */
     final SeaBattleApp seaBattleApp = SeaBattleApp(
       appRouter: appRouter,
-      body: startPage
+      body: posterPage
     );
 
     return {
       http.Client: httpClient,
       JsonService<UserEntity>: userJsonDeserializer,
       UserClient: userClient,
+      UserContext: userContext,
       Mapper<UserEntity?, UserModel?>: userEntityToUserModelMapper,
       Mapper<UserModel?, UserEntity?>: userModelToUserEntityMapper,
       Mapper<UserModel?, User?>: userModelToUserMapper,

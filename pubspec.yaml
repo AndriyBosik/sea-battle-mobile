@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_dotenv: ^5.0.2
   http: ^0.13.4
+  localstore: ^1.2.3
   sea_battle_entity:
     path: packages/sea_battle_entity
   sea_battle_model:
@@ -24,6 +25,8 @@ dependencies:
     path: packages/sea_battle_mapper
   sea_battle_api:
     path: packages/sea_battle_api
+  sea_battle_local_storage:
+    path: packages/sea_battle_local_storage
   sea_battle_repository:
     path: packages/sea_battle_repository
   sea_battle_business_logic:

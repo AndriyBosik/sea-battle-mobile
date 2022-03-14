@@ -34,7 +34,6 @@ class DefaultUserService implements UserService {
         user: _userToUserModelMapper.map(user)!
       );
     } on Exception catch(exception) {
-      print(exception);
       return exception.toString();
     }
     return null;

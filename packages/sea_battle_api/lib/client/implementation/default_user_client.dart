@@ -44,7 +44,6 @@ class DefaultUserClient implements UserClient {
       body: jsonEncode(_userJsonService.toJson(user))
     );
     if (response.statusCode != 200) {
-      print(response.statusCode);
       throw UserRequestFailure();
     }
   }

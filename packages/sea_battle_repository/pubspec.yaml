@@ -19,6 +19,8 @@ dependencies:
     path: ../sea_battle_mapper
   sea_battle_api:
     path: ../sea_battle_api
+  sea_battle_local_storage:
+    path: ../sea_battle_local_storage
 
 dev_dependencies:
   flutter_test:
