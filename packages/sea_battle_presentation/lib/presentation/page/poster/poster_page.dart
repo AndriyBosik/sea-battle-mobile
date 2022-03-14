@@ -28,9 +28,9 @@ class PosterPage extends StatelessWidget {
       child: BlocConsumer<PosterPageCubit, AbstractPosterPageState>(
         listener: (context, state) {
           if (state is PosterPageUserFoundState) {
-            // Navigator.of(context).pushNamed(AppRoutes.home);
+            Navigator.of(context).pushNamed(AppRoutes.home);
           } else if (state is PosterPageUserNotFoundState) {
-            // Navigator.of(context).pushNamed(AppRoutes.start);
+            Navigator.of(context).pushNamed(AppRoutes.start);
           }
         },
         builder: (context, state) => Scaffold(
