@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_presentation/const/app_assets.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -38,7 +39,7 @@ class MessagePopup extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Image.asset(
-                  "assets/pirate_map.png",
+                  AppAssets.pirateMapImage,
                   package: AppConst.packageName,
                 ),
                 Padding(

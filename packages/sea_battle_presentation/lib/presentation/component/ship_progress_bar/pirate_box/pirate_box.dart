@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_presentation/const/app_assets.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -30,7 +31,7 @@ class PirateBox extends StatelessWidget {
           child: Container(
             width: width,
             child: Image.asset(
-              "assets/pirate_box.png",
+              AppAssets.pirateBoxImage,
               package: AppConst.packageName,
             )
           )

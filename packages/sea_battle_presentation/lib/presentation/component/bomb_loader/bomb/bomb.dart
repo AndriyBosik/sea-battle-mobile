@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:sea_battle_presentation/const/app_assets.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 
 class Bomb extends StatelessWidget {
@@ -10,7 +11,7 @@ class Bomb extends StatelessWidget {
       height: 50,
       width: 50,
       child: Image.asset(
-        "assets/bomb.png",
+        AppAssets.bombImage,
         package: AppConst.packageName,
       )
     );

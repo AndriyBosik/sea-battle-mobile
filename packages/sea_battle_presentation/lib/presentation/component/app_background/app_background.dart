@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_presentation/const/app_assets.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 
 class AppBackground extends StatelessWidget {
@@ -7,7 +8,7 @@ class AppBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      "assets/background.jpg",
+      AppAssets.backgroundImage,
       package: AppConst.packageName,
       fit: BoxFit.cover,
       height: double.infinity,

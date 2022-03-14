@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_presentation/const/app_assets.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +21,7 @@ class BoardInput extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Image.asset(
-            "assets/board.png",
+            AppAssets.boardImage,
             package: AppConst.packageName,
             width: 300,
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_presentation/const/app_assets.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 
 class PirateShip extends StatelessWidget {
@@ -20,7 +21,7 @@ class PirateShip extends StatelessWidget {
         SizedBox(
           height: height,
           child: Image.asset(
-            "assets/pirate_ship.png",
+            AppAssets.pirateShipImage,
             package: AppConst.packageName,
           )
         ),
