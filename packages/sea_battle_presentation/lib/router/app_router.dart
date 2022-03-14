@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:sea_battle_presentation/const/app_routes.dart';
+import 'package:sea_battle_presentation/logic/cubit/home_page_cubit.dart';
 import 'package:sea_battle_presentation/logic/cubit/start_page_cubit.dart';
-import 'package:sea_battle_presentation/logic/cubit/user_profile_loading_cubit.dart';
 import 'package:sea_battle_presentation/presentation/page/error/error_page.dart';
 import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
 import 'package:sea_battle_presentation/presentation/page/start/start_page.dart';
 
 class AppRouter {
-  final StartPageCubit _startPageCubit;
-  final UserProfileLoadingCubit _userProfileLoadingCubit;
+  final StartPage _startPage;
+  final HomePage _homePage;
+  final ErrorPage _errorPage;
 
   AppRouter({
-    required StartPageCubit startPageCubit,
-    required UserProfileLoadingCubit userProfileLoadingCubit
+    required StartPage startPage,
+    required HomePage homePage,
+    required ErrorPage errorPage
   }):
-    _startPageCubit = startPageCubit,
-    _userProfileLoadingCubit = userProfileLoadingCubit;
+    _startPage = startPage,
+    _homePage = homePage,
+    _errorPage = errorPage;
 
   Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.start:
         return MaterialPageRoute(
-          builder: (_) => StartPage(
-            startPageCubit: _startPageCubit,
-          )
+          builder: (_) => _startPage
         );
       case AppRoutes.home:
         return MaterialPageRoute(
-          builder: (_) => HomePage(
-            userProfileLoadingCubit: _userProfileLoadingCubit,
-          )
+          builder: (_) => _homePage
         );
       default:
         return MaterialPageRoute(
-          builder: (_) => const ErrorPage()
+          builder: (_) => _errorPage
         );
     }
   }

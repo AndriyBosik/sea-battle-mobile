@@ -1,22 +1,16 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:sea_battle_api/client/abstraction/user_client.dart';
-import 'package:sea_battle_api/client/implementation/default_user_client.dart';
-import 'package:sea_battle_api/json/abstraction/json_deserializer.dart';
-import 'package:sea_battle_api/json/implementation/user_json_deserializer.dart';
+import 'package:sea_battle_api/module.dart';
+import 'package:sea_battle_business_logic/module.dart';
 import 'package:sea_battle_domain/module.dart';
 import 'package:sea_battle_entity/module.dart';
-import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
-import 'package:sea_battle_mapper/mapper/implementation/user_entity_to_user_model_mapper.dart';
-import 'package:sea_battle_mapper/mapper/implementation/user_model_to_user_mapper.dart';
+import 'package:sea_battle_mapper/module.dart';
 import 'package:sea_battle_model/model/user_model.dart';
-import 'package:sea_battle_presentation/logic/cubit/start_page_cubit.dart';
-import 'package:sea_battle_presentation/logic/cubit/user_profile_loading_cubit.dart';
+import 'package:sea_battle_presentation/presentation/page/error/error_page.dart';
+import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
 import 'package:sea_battle_presentation/presentation/sea_battle_app.dart';
 import 'package:sea_battle_presentation/router/app_router.dart';
 import 'package:sea_battle_presentation/presentation/page/start/start_page.dart';
-import 'package:sea_battle_presentation/service/abstraction/user_service.dart';
-import 'package:sea_battle_presentation/service/implementation/default_user_service.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';
 import 'package:sea_battle_repository/repository/implementation/default_user_repository.dart';
 
@@ -42,45 +36,55 @@ class DIContainer {
 
     /* Mappers */
     final Mapper<UserEntity?, UserModel?> userEntityToUserModelMapper = UserEntityToUserModelMapper();
+    final Mapper<UserModel?, UserEntity?> userModelToUserEntityMapper = UserModelToUserEntityMapper();
     final Mapper<UserModel?, User?> userModelToUserMapper = UserModelToUserMapper();
+    final Mapper<User?, UserModel?> userToUserModelMapper = UserToUserModelMapper();
     
     /* httpClient */
     final httpClient = http.Client();
 
     /* JsonDeserializers */
-    final JsonDeserializer<UserEntity> userJsonDeserializer = UserJsonDeserializer();
+    final JsonService<UserEntity> userJsonDeserializer = UserJsonService();
     
     /* ApiClients */
     final UserClient userClient = DefaultUserClient(
       apiUrl: apiUrl,
       httpClient: httpClient,
-      userJsonDeserializer: userJsonDeserializer);
+      userJsonService: userJsonDeserializer);
     
     /* Repositories */
     final UserRepository userRepository = DefaultUserRepository(
-      userMapper: userEntityToUserModelMapper,
+      userEntityToUserModelMapper: userEntityToUserModelMapper,
+      userModelToUserEntityMapper: userModelToUserEntityMapper,
       userClient: userClient);
+    
+    /* Validators */
+    final Validator<User> userValidator = UserValidator();
     
     /* Services */
     final UserService userService = DefaultUserService(
+      userValidator: userValidator,
+      userToUserModelMapper: userToUserModelMapper,
       userRepository: userRepository,
-      userMapper: userModelToUserMapper);
-    
-    /* Cubits */
-    final StartPageCubit startPageCubit = StartPageCubit();
-    final UserProfileLoadingCubit userProfileLoadingCubit = UserProfileLoadingCubit();
-    
-    /* AppRouter */
-    final AppRouter appRouter = AppRouter(
-      startPageCubit: startPageCubit,
-      userProfileLoadingCubit: userProfileLoadingCubit
     );
 
     /* Pages */
+    const HomePage homePage = HomePage();
+
+    const ErrorPage errorPage = ErrorPage();
+
     final StartPage startPage = StartPage(
-      startPageCubit: startPageCubit,
+      userService: userService,
     );
 
+    /* AppRouter */
+    final AppRouter appRouter = AppRouter(
+      errorPage: errorPage,
+      homePage: homePage,
+      startPage: startPage
+    );
+
+    /* App */
     final SeaBattleApp seaBattleApp = SeaBattleApp(
       appRouter: appRouter,
       body: startPage
@@ -88,15 +92,16 @@ class DIContainer {
 
     return {
       http.Client: httpClient,
-      JsonDeserializer<UserEntity>: userJsonDeserializer,
+      JsonService<UserEntity>: userJsonDeserializer,
       UserClient: userClient,
       Mapper<UserEntity?, UserModel?>: userEntityToUserModelMapper,
+      Mapper<UserModel?, UserEntity?>: userModelToUserEntityMapper,
       Mapper<UserModel?, User?>: userModelToUserMapper,
       UserRepository: userRepository,
       UserService: userService,
-      StartPageCubit: startPageCubit,
-      UserProfileLoadingCubit: userProfileLoadingCubit,
       StartPage: startPage,
+      HomePage: homePage,
+      ErrorPage: errorPage,
       AppRouter: appRouter,
       SeaBattleApp: seaBattleApp
     };

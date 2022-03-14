@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_presentation/const/app_routes.dart';
 import 'package:sea_battle_presentation/logic/cubit/start_page_cubit.dart';
 import 'package:sea_battle_presentation/logic/state/start_page/abstract_start_page_state.dart';
-import 'package:sea_battle_presentation/logic/state/start_page/start_page_initial_state.dart';
 import 'package:sea_battle_presentation/logic/state/start_page/start_page_state.dart';
 import 'package:sea_battle_presentation/logic/state/start_page/start_page_successful_state.dart';
+import 'package:sea_battle_presentation/logic/state/start_page/start_page_user_creating_state.dart';
 import 'package:sea_battle_presentation/presentation/component/app_background/app_background.dart';
 import 'package:sea_battle_presentation/presentation/component/message_popup/message_popup.dart';
 import 'package:sea_battle_presentation/presentation/component/user_form/user_form.dart';
 
 class StartPage extends StatelessWidget {
-  final StartPageCubit _startPageCubit;
+  final UserService _userService;
 
   const StartPage({
     Key? key,
-    required StartPageCubit startPageCubit
+    required UserService userService
   }):
-    _startPageCubit = startPageCubit,
+    _userService = userService,
     super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<StartPageCubit>(
-      create: (_) => _startPageCubit,
+      create: (_) => StartPageCubit(
+        userService: _userService
+      ),
       child: BlocConsumer<StartPageCubit, AbstractStartPageState>(
         listener: (context, state) {
           if (state is StartPageSuccessfulState) {
@@ -39,8 +42,9 @@ class StartPage extends StatelessWidget {
                 child: UserForm(
                   initialNicknameValue: _mapStateToNicknameValue(state),
                   onPlayButtonPressed: (text) {
-                    _startPageCubit.validateNickname(text);
+                    BlocProvider.of<StartPageCubit>(context).validateNickname(text);
                   },
+                  isLoading: state is StartPageUserCreatingState,
                 )
               )
             ),
@@ -48,7 +52,7 @@ class StartPage extends StatelessWidget {
               child: MessagePopup(
                 key: UniqueKey(),
                 message: _mapStateToMessage(state),
-                onOkButtonPressed: _startPageCubit.confirmMessage,
+                onOkButtonPressed: BlocProvider.of<StartPageCubit>(context).confirmMessage,
               ),
             ),
           ],
@@ -59,6 +63,9 @@ class StartPage extends StatelessWidget {
 
   String _mapStateToNicknameValue(AbstractStartPageState state) {
     if (state is StartPageState) {
+      return state.nickname;
+    }
+    if (state is StartPageUserCreatingState) {
       return state.nickname;
     }
     return "";

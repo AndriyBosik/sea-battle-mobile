@@ -3,22 +3,22 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sea_battle_api/client/abstraction/user_client.dart';
 import 'package:sea_battle_api/exception/user_request_failure.dart';
-import 'package:sea_battle_api/json/abstraction/json_deserializer.dart';
+import 'package:sea_battle_api/json/abstraction/json_service.dart';
 import 'package:sea_battle_entity/module.dart';
 
 class DefaultUserClient implements UserClient {
   final String _apiUrl;
   final http.Client _httpClient;
-  final JsonDeserializer<UserEntity> _userJsonDeserializer;
+  final JsonService<UserEntity> _userJsonService;
 
   DefaultUserClient({
     required String apiUrl,
     required http.Client httpClient,
-    required JsonDeserializer<UserEntity> userJsonDeserializer
+    required JsonService<UserEntity> userJsonService
   }):
     _apiUrl = apiUrl,
     _httpClient = httpClient,
-    _userJsonDeserializer = userJsonDeserializer;
+    _userJsonService = userJsonService;
 
   @override
   Future<UserEntity?> getUserByNickname(String nickname) async {
@@ -30,6 +30,22 @@ class DefaultUserClient implements UserClient {
     }
 
     final Map<String, dynamic>? json = jsonDecode(response.body) as Map<String, dynamic>?;
-    return _userJsonDeserializer.fromJson(json);
+    return _userJsonService.fromJson(json);
+  }
+
+  @override
+  Future<void> createUser({required UserEntity user}) async {
+    final Uri url = Uri.parse("$_apiUrl/api/users");
+    final response = await _httpClient.post(
+      url,
+      headers: <String, String>{
+        "Content-Type": "application/json"
+      },
+      body: jsonEncode(_userJsonService.toJson(user))
+    );
+    if (response.statusCode != 200) {
+      print(response.statusCode);
+      throw UserRequestFailure();
+    }
   }
 }

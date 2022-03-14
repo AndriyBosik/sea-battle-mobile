@@ -270,6 +270,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  sea_battle_business_logic:
+    dependency: "direct main"
+    description:
+      path: "packages/sea_battle_business_logic"
+      relative: true
+    source: path
+    version: "0.0.1"
   sea_battle_domain:
     dependency: "direct main"
     description:

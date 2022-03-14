@@ -26,6 +26,8 @@ dependencies:
     path: packages/sea_battle_api
   sea_battle_repository:
     path: packages/sea_battle_repository
+  sea_battle_business_logic:
+    path: packages/sea_battle_business_logic
   sea_battle_presentation:
     path: packages/sea_battle_presentation
 

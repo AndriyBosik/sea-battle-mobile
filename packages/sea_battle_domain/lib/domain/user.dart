@@ -1,9 +1,9 @@
 class User {
   final int id;
-  final String nickname;
+  final String? nickname;
 
   User({
-    required this.id,
+    this.id = 0,
     required this.nickname
   });
 }

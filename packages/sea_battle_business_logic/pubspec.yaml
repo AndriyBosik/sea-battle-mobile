@@ -1,4 +1,4 @@
-name: sea_battle_presentation
+name: sea_battle_business_logic
 description: A new Flutter package project.
 version: 0.0.1
 publish_to: 'none'
@@ -11,25 +11,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sea_battle_model:
-    path: ../sea_battle_model
   sea_battle_domain:
     path: ../sea_battle_domain
+  sea_battle_model:
+    path: ../sea_battle_model
   sea_battle_mapper:
     path: ../sea_battle_mapper
   sea_battle_repository:
     path: ../sea_battle_repository
-  sea_battle_business_logic:
-    path: ../sea_battle_business_logic
-  google_fonts: ^2.3.1
-  simple_animations: ^4.0.1
-  flutter_bloc: ^8.0.1
-  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.0
 
 flutter:
-  assets:
-    - assets/
