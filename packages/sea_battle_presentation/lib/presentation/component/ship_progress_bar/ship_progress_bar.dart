@@ -6,6 +6,7 @@ import 'package:sea_battle_presentation/presentation/component/ship_progress_bar
 class ShipProgressBar extends StatelessWidget {
   static const _boxesCount = 7;
   static const _loaderHeight = 100;
+  static const _space = 50;
 
   final double _percentageValue;
   final String _stageDescription;
@@ -23,7 +24,7 @@ class ShipProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double maxWidth = constraints.maxWidth;
+        double maxWidth = constraints.maxWidth - _space;
         double progress = _percentageValue / 100;
         return Column(
           mainAxisSize: MainAxisSize.max,

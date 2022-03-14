@@ -10,10 +10,7 @@ import 'package:sea_battle_entity/module.dart';
 import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
 import 'package:sea_battle_mapper/module.dart';
 import 'package:sea_battle_model/model/user_model.dart';
-import 'package:sea_battle_presentation/presentation/page/poster/poster_page.dart';
-import 'package:sea_battle_presentation/presentation/page/error/error_page.dart';
-import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
-import 'package:sea_battle_presentation/presentation/page/start/start_page.dart';
+import 'package:sea_battle_presentation/module.dart';
 import 'package:sea_battle_presentation/presentation/sea_battle_app.dart';
 import 'package:sea_battle_presentation/router/app_router.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_context_repository.dart';
@@ -85,8 +82,12 @@ class DIContainer {
     final UserContextService userContextService = DefaultUserContextService(
       userContextRepository: userContextRepository);
 
+    /* Builders */
+    ProgressStagesBuilder progressStagesBuilder = DefaultProgressStagesBuilder();
+
     /* Pages */
-    const HomePage homePage = HomePage();
+    final HomePage homePage = HomePage(
+      progressStagesBuilder: progressStagesBuilder);
 
     const ErrorPage errorPage = ErrorPage();
 
