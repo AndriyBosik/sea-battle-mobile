@@ -1,6 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:localstore/localstore.dart';
 import 'package:sea_battle_api/module.dart';
 import 'package:sea_battle_business_logic/module.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_context_service.dart';
@@ -11,8 +11,6 @@ import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
 import 'package:sea_battle_mapper/module.dart';
 import 'package:sea_battle_model/model/user_model.dart';
 import 'package:sea_battle_presentation/module.dart';
-import 'package:sea_battle_presentation/presentation/sea_battle_app.dart';
-import 'package:sea_battle_presentation/router/app_router.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_context_repository.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';
 import 'package:sea_battle_repository/repository/implementation/default_user_context_repository.dart';
@@ -47,8 +45,8 @@ class DIContainer {
     /* httpClient */
     final httpClient = http.Client();
 
-    /* Localstore */
-    Localstore db = Localstore.instance;
+    /* Hive */
+    HiveInterface hive = Hive;
 
     /* JsonDeserializers */
     final JsonService<UserEntity> userJsonDeserializer = UserJsonService();
@@ -61,7 +59,7 @@ class DIContainer {
     
     /* LocalStorage */
     final UserContext userContext = DefaultUserContext(
-      db: db);
+      hive: hive);
 
     /* Repositories */
     final UserRepository userRepository = DefaultUserRepository(
@@ -114,6 +112,7 @@ class DIContainer {
 
     return {
       http.Client: httpClient,
+      HiveInterface: hive,
       JsonService<UserEntity>: userJsonDeserializer,
       UserClient: userClient,
       UserContext: userContext,

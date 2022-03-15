@@ -1,33 +1,34 @@
-import 'package:localstore/localstore.dart';
+import 'package:hive/hive.dart';
 import 'package:sea_battle_local_storage/storage/abstraction/user_context.dart';
 
 class DefaultUserContext implements UserContext {
-  static const _collectionName = "app_context";
-  static const _nicknameDocumentId = "nickname";
+  static const _userContextBoxName = "user_context";
+  static const _savedUserNicknameKey = "nickname";
 
-  final Localstore _db;
+  final HiveInterface _hive;
 
   DefaultUserContext({
-    required Localstore db
+    required HiveInterface hive
   }):
-    _db = db;
+    _hive = hive;
 
   @override
   Future<String?> getUserNickname() async {
+    Box<String> box = await _hive.openBox(_userContextBoxName);
     Future.delayed(const Duration(milliseconds: 1500));
-    Map<String, dynamic>? nickname = await _db.collection(_collectionName).doc(_nicknameDocumentId).get();
-    return nickname == null ? null : nickname["value"] as String;
+    String? nickname = box.get(_savedUserNicknameKey);
+    return nickname;
   }
 
   @override
   Future<void> saveUserNickname(String nickname) async {
-    await _db.collection(_collectionName).doc(_nicknameDocumentId).set({
-      "value": nickname
-    });
+    Box<String> box = await _hive.openBox(_userContextBoxName);
+    await box.put(_savedUserNicknameKey, nickname);
   }
 
   @override
   Future<void> clear() async {
-    await _db.collection(_collectionName).doc(_nicknameDocumentId).delete();
+    Box<String> box = await _hive.openBox(_userContextBoxName);
+    await box.delete(_savedUserNicknameKey);
   }
 }

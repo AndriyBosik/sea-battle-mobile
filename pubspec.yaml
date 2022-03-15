@@ -14,7 +14,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_dotenv: ^5.0.2
   http: ^0.13.4
-  localstore: ^1.2.3
+  hive: ^2.0.6
+  hive_flutter: ^1.1.0
   sea_battle_entity:
     path: packages/sea_battle_entity
   sea_battle_model:
