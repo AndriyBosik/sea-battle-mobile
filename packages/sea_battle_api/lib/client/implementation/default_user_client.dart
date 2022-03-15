@@ -24,8 +24,8 @@ class DefaultUserClient implements UserClient {
 
   @override
   Future<UserEntity?> getUserByNickname(String nickname) async {
-    final String urlPath = format(Api.getUser, {"nickname": nickname});
-    final Uri url = Uri.parse(_apiUrl + urlPath);
+    final String urlPath = Api.getUser.withBaseUrl(_apiUrl, {"nickname": nickname});
+    final Uri url = Uri.parse(urlPath);
 
     final response = await _httpClient.get(url);
     if (response .statusCode != 200) {
@@ -38,7 +38,7 @@ class DefaultUserClient implements UserClient {
 
   @override
   Future<void> createUser({required UserEntity user}) async {
-    final Uri url = Uri.parse(_apiUrl + Api.createUser);
+    final Uri url = Uri.parse(Api.createUser.withBaseUrl(_apiUrl));
     final response = await _httpClient.post(
       url,
       headers: <String, String>{
