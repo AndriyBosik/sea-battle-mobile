@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.4
+  format: ^1.1.1
   sea_battle_entity:
     path: ../sea_battle_entity
 
