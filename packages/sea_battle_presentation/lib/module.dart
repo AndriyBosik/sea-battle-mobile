@@ -6,7 +6,8 @@ export "presentation/page/start/start_page.dart";
 export "presentation/page/home/home_page.dart";
 export "presentation/page/poster/poster_page.dart";
 
-export "package:sea_battle_presentation/router/app_router.dart";
+export "router/app_router.dart";
+export "router/default_app_router.dart";
 
 export "logic/abstraction/progress_stages_builder.dart";
 export "logic/implementation/default_progress_stages_builder.dart";

@@ -97,7 +97,7 @@ class DIContainer {
       userContextService: userContextService);
 
     /* AppRouter */
-    final AppRouter appRouter = AppRouter(
+    final AppRouter appRouter = DefaultAppRouter(
       posterPage: posterPage,
       errorPage: errorPage,
       homePage: homePage,
