@@ -34,6 +34,9 @@ class StartPage extends StatelessWidget {
       ),
       child: BlocConsumer<StartPageCubit, AbstractStartPageState>(
         listener: (context, state) {
+          if (state is StartPageUserCreatingState) {
+            FocusManager.instance.primaryFocus?.unfocus();
+          }
           if (state is StartPageSuccessfulState) {
             Navigator.of(context).pushNamed(AppRoutes.home);
           }

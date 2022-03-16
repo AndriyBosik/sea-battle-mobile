@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PlayButton extends StatelessWidget {
+class StartButton extends StatelessWidget {
   final VoidCallback _onPressed;
 
-  const PlayButton({
+  const StartButton({
     Key? key,
     required VoidCallback onPressed
   }):
@@ -18,7 +18,7 @@ class PlayButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: 4),
         child: Text(
-          "Play".toUpperCase(),
+          "Start".toUpperCase(),
           style: GoogleFonts.getFont(
             "Luckiest Guy",
             fontSize: 40,
