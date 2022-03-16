@@ -95,13 +95,16 @@ class DIContainer {
     
     final PosterPage posterPage = PosterPage(
       userContextService: userContextService);
+    
+    final LanguageSelectionPage languageSelectionPage = LanguageSelectionPage();
 
     /* AppRouter */
     final AppRouter appRouter = DefaultAppRouter(
       posterPage: posterPage,
       errorPage: errorPage,
       homePage: homePage,
-      startPage: startPage
+      startPage: startPage,
+      languageSelectionPage: languageSelectionPage
     );
 
     /* App */

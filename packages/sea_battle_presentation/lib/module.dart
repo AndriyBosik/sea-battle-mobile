@@ -5,6 +5,7 @@ export "presentation/page/error/error_page.dart";
 export "presentation/page/start/start_page.dart";
 export "presentation/page/home/home_page.dart";
 export "presentation/page/poster/poster_page.dart";
+export "presentation/page/language_selection/language_selection_page.dart";
 
 export "router/app_router.dart";
 export "router/default_app_router.dart";

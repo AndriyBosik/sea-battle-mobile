@@ -27,10 +27,10 @@ class PosterPage extends StatelessWidget {
       )..start(),
       child: BlocConsumer<PosterPageCubit, AbstractPosterPageState>(
         listener: (context, state) {
-          if (state is PosterPageUserFoundState) {
+          if (state is PosterPageUserFoundState) { // TODO change to PosterPageContextFoundState
             Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-          } else if (state is PosterPageUserNotFoundState) {
-            Navigator.of(context).pushReplacementNamed(AppRoutes.start);
+          } else if (state is PosterPageUserNotFoundState) { // TODO change to PosterPageContextNotFoundState
+            Navigator.of(context).pushReplacementNamed(AppRoutes.languageSelection);
           }
         },
         builder: (context, state) => Scaffold(
