@@ -7,6 +7,7 @@ import 'package:sea_battle_presentation/controller/state/first_setup_page/first_
 import 'package:sea_battle_presentation/controller/state/first_setup_page/first_setup_page_nickname_step_state.dart';
 import 'package:sea_battle_presentation/controller/state/first_setup_page/first_setup_page_nickname_step_user_creating_state.dart';
 import 'package:sea_battle_presentation/meta/arrow_button_direction.dart';
+import 'package:sea_battle_presentation/meta/first_setup_step.dart';
 import 'package:sea_battle_presentation/presentation/component/arrow_button/arrow_button.dart';
 import 'package:sea_battle_presentation/presentation/view/first_setup/step/language_step/language_step.dart';
 import 'package:sea_battle_presentation/presentation/view/first_setup/step/nickname_step/nickname_step.dart';
@@ -36,12 +37,12 @@ class FirstSetupView extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           _mapStateToStep(cubit),
-          _state is FirstSetupPageLanguageStepState ? (
+          _state.firstSetupStep == FirstSetupStep.language ? (
             Container()
           ) : (
             _backButton(cubit)
           ),
-          _state is FirstSetupPageNicknameStepState ? (
+          _state.firstSetupStep == FirstSetupStep.nickname || _state.firstSetupStep == FirstSetupStep.completed ? (
             Container()
           ) : (
             _nextButton(cubit)

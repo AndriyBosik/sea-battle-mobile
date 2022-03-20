@@ -20,6 +20,7 @@ class DefaultAppContext implements AppContext {
 
   @override
   Future<AppContextEntity?> getAppContext() async {
+    await clear();
     Box<Map<dynamic, dynamic>> box = await _hive.openBoxSafely<Map<dynamic, dynamic>>(_appContextBoxName);
     Future.delayed(const Duration(milliseconds: 1500));
     Map<String, dynamic>? appContextJson = box.getJsonMap(_savedAppContextKey);
