@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/presentation/component/locale/abstract_locale_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sea_battle_presentation/controller/cubit/locale_cubit.dart';
+import 'package:sea_battle_presentation/controller/state/locale/locale_state.dart';
 
-class LocaleTextFormField extends StatefulWidget {
+class LocaleTextFormField extends StatelessWidget {
   final TextEditingController _textEditingController;
   final TextStyle _textStyle;
   final InputDecoration _inputDecoration;
@@ -19,18 +21,21 @@ class LocaleTextFormField extends StatefulWidget {
     super(key: key);
   
   @override
-  _LocaleTextFormFieldState createState() => _LocaleTextFormFieldState();
-}
-
-class _LocaleTextFormFieldState extends AbstractLocaleState<LocaleTextFormField> {
-  @override
-  Widget buildLocaleWidget(BuildContext context) {
-    return TextFormField(
-      controller: widget._textEditingController,
-      style: widget._textStyle,
-      decoration: widget._inputDecoration.copyWith(
-        hintText: tr(widget._inputDecoration.hintText ?? "")
-      ),
+  Widget build(BuildContext context) {
+    return BlocProvider<LocaleCubit>(
+      create: (_) => LocaleCubit()..init(),
+      child: BlocBuilder<LocaleCubit, LocaleState>(
+        builder: (context, state) {
+          context.setLocale(state.locale);
+          return TextFormField(
+            controller: _textEditingController,
+            style: _textStyle,
+            decoration: _inputDecoration.copyWith(
+              hintText: tr(_inputDecoration.hintText ?? "")
+            ),
+          );
+        }
+      )
     );
   }
 }

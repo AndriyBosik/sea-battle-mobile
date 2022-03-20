@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sea_battle_presentation/controller/cubit/locale_cubit.dart';
+import 'package:sea_battle_presentation/controller/state/locale/locale_state.dart';
 import 'package:sea_battle_presentation/meta/text_case.dart';
-import 'package:sea_battle_presentation/presentation/component/locale/abstract_locale_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class LocaleText extends StatefulWidget {
+class LocaleText extends StatelessWidget {
   final String _textKey;
   final TextCase _textCase;
   final TextStyle? _style;
@@ -20,20 +22,23 @@ class LocaleText extends StatefulWidget {
     super(key: key);
 
   @override
-  _LocaleTextState createState() => _LocaleTextState();
-}
-
-class _LocaleTextState extends AbstractLocaleState<LocaleText> {
-  @override
-  Widget buildLocaleWidget(BuildContext context) {
-    return Text(
-      _decorateWithTextCase(tr(widget._textKey)),
-      style: widget._style
+  Widget build(BuildContext context) {
+    return BlocProvider<LocaleCubit>(
+      create: (_) => LocaleCubit()..init(),
+      child: BlocBuilder<LocaleCubit, LocaleState>(
+        builder: (context, state) {
+          context.setLocale(state.locale);
+          return Text(
+            _decorateWithTextCase(tr(_textKey)),
+            style: _style
+          );
+        }
+      )
     );
   }
 
   String _decorateWithTextCase(String text) {
-    switch (widget._textCase) {
+    switch (_textCase) {
       case TextCase.lowercase:
         return text.toLowerCase();
       case TextCase.uppercase:
