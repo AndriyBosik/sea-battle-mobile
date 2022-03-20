@@ -1,5 +1,5 @@
 import 'package:sea_battle_converter/converter/abstraction/json_converter.dart';
-import 'package:sea_battle_entity/module.dart';
+import 'package:sea_battle_entity/sea_battle_entity.dart';
 
 class UserJsonConverter implements JsonConverter<UserEntity> {
   @override

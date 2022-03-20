@@ -1,5 +1,5 @@
 import 'package:sea_battle_api/client/abstraction/user_client.dart';
-import 'package:sea_battle_entity/module.dart';
+import 'package:sea_battle_entity/sea_battle_entity.dart';
 import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
 import 'package:sea_battle_model/model/user_model.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';

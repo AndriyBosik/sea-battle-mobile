@@ -1,7 +1,7 @@
 import 'package:sea_battle_entity/entity/app_context_entity.dart';
 import 'package:sea_battle_local_storage/storage/abstraction/app_context.dart';
 import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
-import 'package:sea_battle_model/module.dart';
+import 'package:sea_battle_model/sea_battle_model.dart';
 import 'package:sea_battle_repository/repository/abstraction/app_context_repository.dart';
 
 class DefaultAppContextRepository implements AppContextRepository {

@@ -1,6 +1,6 @@
 import 'package:sea_battle_business_logic/service/abstraction/app_context_service.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
-import 'package:sea_battle_domain/module.dart';
+import 'package:sea_battle_domain/sea_battle_domain.dart';
 import 'package:sea_battle_dto/dto/first_setup.dart';
 import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
 import 'package:sea_battle_presentation/controller/state/first_setup_page/abstract_first_setup_page_state.dart';

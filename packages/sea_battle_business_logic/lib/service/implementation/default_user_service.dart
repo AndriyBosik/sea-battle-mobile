@@ -1,6 +1,6 @@
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_business_logic/validator/abstraction/validator.dart';
-import 'package:sea_battle_domain/module.dart';
+import 'package:sea_battle_domain/sea_battle_domain.dart';
 import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
 import 'package:sea_battle_model/model/user_model.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';

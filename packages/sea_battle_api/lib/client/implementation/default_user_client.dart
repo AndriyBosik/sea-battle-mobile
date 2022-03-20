@@ -5,7 +5,7 @@ import 'package:sea_battle_api/client/abstraction/user_client.dart';
 import 'package:sea_battle_api/const/api.dart';
 import 'package:sea_battle_api/exception/user_request_failure.dart';
 import 'package:sea_battle_converter/converter/abstraction/converter.dart';
-import 'package:sea_battle_entity/module.dart';
+import 'package:sea_battle_entity/sea_battle_entity.dart';
 
 class DefaultUserClient implements UserClient {
   final String _apiUrl;

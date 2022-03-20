@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:sea_battle_local_storage/const/storage_box.dart';
 
 extension JsonExtension on Box<Map<dynamic, dynamic>> {
   Map<String, dynamic>? getJsonMap(String key) {

@@ -1,21 +1,21 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
-import 'package:sea_battle_api/module.dart';
-import 'package:sea_battle_business_logic/module.dart';
+import 'package:sea_battle_api/sea_battle_api.dart';
+import 'package:sea_battle_business_logic/sea_battle_business_logic.dart';
 import 'package:sea_battle_converter/converter/abstraction/converter.dart';
 import 'package:sea_battle_converter/converter/implementation/app_context_json_converter.dart';
 import 'package:sea_battle_converter/converter/implementation/user_json_converter.dart';
-import 'package:sea_battle_domain/module.dart' as domain;
+import 'package:sea_battle_domain/sea_battle_domain.dart' as domain;
 import 'package:sea_battle_dto/dto/first_setup.dart';
-import 'package:sea_battle_entity/module.dart';
+import 'package:sea_battle_entity/sea_battle_entity.dart';
 import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
 import 'package:sea_battle_mapper/mapper/implementation/first_setup_to_app_context_mapper.dart';
-import 'package:sea_battle_mapper/module.dart';
-import 'package:sea_battle_model/module.dart';
-import 'package:sea_battle_presentation/module.dart';
+import 'package:sea_battle_mapper/sea_battle_mapper.dart';
+import 'package:sea_battle_model/sea_battle_model.dart';
+import 'package:sea_battle_presentation/sea_battle_presentation.dart';
 import 'package:sea_battle_presentation/presentation/app.dart';
-import 'package:sea_battle_repository/module.dart';
+import 'package:sea_battle_repository/sea_battle_repository.dart';
 
 class DIContainer {
   static final DIContainer _instance = DIContainer._privateConstructor();

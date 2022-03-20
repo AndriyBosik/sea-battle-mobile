@@ -1,4 +1,4 @@
-import 'package:sea_battle_entity/module.dart';
+import 'package:sea_battle_entity/sea_battle_entity.dart';
 
 abstract class UserClient {
   Future<UserEntity?> getUserByNickname(String nickname);
