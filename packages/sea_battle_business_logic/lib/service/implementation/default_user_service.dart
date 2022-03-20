@@ -20,21 +20,21 @@ class DefaultUserService implements UserService {
     _userRepository = userRepository;
   
   @override
-  Future<String?> createUser({required User user}) async {
-    String? error = _userValidator.validate(user);
+  Future<AbstractError?> createUser({required User user}) async {
+    AbstractError? error = _userValidator.validate(user);
     await Future.delayed(const Duration(seconds: 2));
     if (error != null) {
       return error;
     }
     if (await _userRepository.getUserByNickname(nickname: user.nickname!) != null) {
-      return "Such user already exists";
+      return ExistingError(dataType: "user");
     }
     try {
       await _userRepository.createUser(
         user: _userToUserModelMapper.map(user)!
       );
     } on Exception catch(exception) {
-      return exception.toString();
+      return UnknownError(message: exception.toString());
     }
     return null;
   }

@@ -22,6 +22,10 @@ dependencies:
     path: packages/sea_battle_model
   sea_battle_domain:
     path: packages/sea_battle_domain
+  sea_battle_dto:
+    path: packages/sea_battle_dto
+  sea_battle_converter:
+    path: packages/sea_battle_converter
   sea_battle_mapper:
     path: packages/sea_battle_mapper
   sea_battle_api:

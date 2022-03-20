@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sea_battle_presentation/presentation/component/board_input/board_input.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_loader/bomb_loader.dart';
-import 'package:sea_battle_presentation/presentation/component/user_form/play_button/start_button.dart';
+import 'package:sea_battle_presentation/presentation/component/user_form/start_button/start_button.dart';
 
 class UserForm extends StatelessWidget {
-  final Function(String text) _onPlayButtonPressed;
+  final Function(String text) _onStartButtonPressed;
   final bool _isLoading;
   final TextEditingController _nicknameController = TextEditingController();
 
@@ -12,10 +12,10 @@ class UserForm extends StatelessWidget {
     Key? key,
     String initialNicknameValue = "",
     bool isLoading = false,
-    required Function(String text) onPlayButtonPressed,
+    required Function(String text) onStartButtonPressed,
 
   }):
-    _onPlayButtonPressed = onPlayButtonPressed,
+    _onStartButtonPressed = onStartButtonPressed,
     _isLoading = isLoading,
     super(key: key)
   {
@@ -42,7 +42,7 @@ class UserForm extends StatelessWidget {
                     const BombLoader()
                   ) : (
                     StartButton(
-                      onPressed: () => _onPlayButtonPressed(_nicknameController.text),
+                      onPressed: () => _onStartButtonPressed(_nicknameController.text),
                     )
                   )
                 ],

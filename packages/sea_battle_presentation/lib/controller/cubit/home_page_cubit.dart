@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loaded_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
@@ -22,13 +23,13 @@ class HomePageCubit extends Cubit<AbstractHomePageState> {
     await _progressStagesBuilder
       .init()
       .addStage(
-        description: "Loading User Data...",
+        description: LocaleKey.loadingYourData,
         onRun: () async => await Future.delayed(const Duration(seconds: 2)))
       .addStage(
-        description: "Loading Images...",
+        description: LocaleKey.loadingImages,
         onRun: () async => await Future.delayed(const Duration(seconds: 3)))
       .addStage(
-        description: "Finishing some things...",
+        description: LocaleKey.finishingSomeThings,
         onRun: () async => await Future.delayed(const Duration(seconds: 5)))
       .start(
         onCompleted: () async {},

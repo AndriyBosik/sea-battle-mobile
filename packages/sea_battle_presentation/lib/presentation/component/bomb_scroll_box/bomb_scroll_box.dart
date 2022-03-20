@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/dto/scroll_bar_context.dart';
+import 'package:sea_battle_dto/dto/scroll_bar_context.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_scroll_box/scroll_list/scroll_list.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_scroll_box/scroll_track/scroll_track.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_scroll_box/track/track.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/const/app_assets.dart';
+import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 
 class Track extends StatelessWidget {
@@ -32,7 +32,7 @@ class Track extends StatelessWidget {
       child: GestureDetector(
         onVerticalDragUpdate: _onVerticalDragUpdate,
         child: Image.asset(
-          AppAssets.bombImage,
+          AppAsset.bombImage,
           package: AppConst.packageName,
         )
       )

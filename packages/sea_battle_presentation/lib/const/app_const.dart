@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+
 class AppConst {
-  static final String packageName = "sea_battle_presentation";
+  static const String packageName = "sea_battle_presentation";
+  static final GlobalKey<NavigatorState> materialKey = GlobalKey<NavigatorState>();
 }

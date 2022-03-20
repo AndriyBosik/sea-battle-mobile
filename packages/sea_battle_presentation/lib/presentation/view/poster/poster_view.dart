@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class PosterView extends StatelessWidget {
@@ -17,7 +18,7 @@ class PosterView extends StatelessWidget {
           "Sea\nBattle".toUpperCase(),
           textAlign: TextAlign.center,
           style: GoogleFonts.getFont(
-            "Luckiest Guy",
+            SeaBattleTheme.primaryFont,
             fontSize: 70,
             color: Colors.white.withOpacity(value),
             letterSpacing: 5

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
+import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 import 'package:sea_battle_presentation/presentation/component/ship_progress_bar/pirate_box/pirate_box.dart';
 import 'package:sea_battle_presentation/presentation/component/ship_progress_bar/pirate_ship/pirate_ship.dart';
 
@@ -9,15 +11,15 @@ class ShipProgressBar extends StatelessWidget {
   static const _space = 50;
 
   final double _percentageValue;
-  final String _stageDescription;
+  final String _stageDescriptionKey;
   
   const ShipProgressBar({
     Key? key,
     required double percentageValue,
-    required String stageDescription
+    required String stageDescriptionKey
   }):
     _percentageValue = percentageValue,
-    _stageDescription = stageDescription,
+    _stageDescriptionKey = stageDescriptionKey,
     super(key: key);
 
   @override
@@ -49,10 +51,10 @@ class ShipProgressBar extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 5, bottom: 40),
-              child: Text(
-                _stageDescription,
+              child: LocaleText(
+                textKey: _stageDescriptionKey,
                 style: GoogleFonts.getFont(
-                  "Architects Daughter",
+                  SeaBattleTheme.secondaryFont,
                   fontSize: 25,
                   letterSpacing: 2,
                   fontWeight: FontWeight.bold

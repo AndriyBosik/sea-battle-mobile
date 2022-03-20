@@ -1,0 +1,17 @@
+{
+    "next": "Далі",
+    "back": "Назад",
+    "loaded": "Завантажено",
+    "start": "Старт",
+    "typeNickname": "Введіть нікнейм",
+    "loadingYourData": "Завантаження ваших даних",
+    "loadingImages": "Завантаження картинок",
+    "finishingSomeThings": "Закінчення деяких речей",
+    "initializing": "Ініціалізація",
+    "nickname": "Нікнейм",
+    "user": "Користувач",
+
+    "emptyStringError": "{field} не повинне бути порожнім",
+    "existingError": "Такий(-а) {dataType} уже існує",
+    "shortStringError": "{field} поле повинно мати не менше {length} символів"
+}

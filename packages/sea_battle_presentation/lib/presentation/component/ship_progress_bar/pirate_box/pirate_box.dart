@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/const/app_assets.dart';
+import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class PirateBox extends StatelessWidget {
-  double left;
-  double bottom;
-  double height;
-  double width;
+  final double left;
+  final double bottom;
+  final double height;
+  final double width;
 
-  PirateBox({
+  const PirateBox({
     Key? key,
     required this.left,
     required this.bottom,
@@ -28,10 +28,10 @@ class PirateBox extends StatelessWidget {
           left: left,
           bottom: bottom,
           height: height*(1 - value.abs() / 1000),
-          child: Container(
+          child: SizedBox(
             width: width,
             child: Image.asset(
-              AppAssets.pirateBoxImage,
+              AppAsset.pirateBoxImage,
               package: AppConst.packageName,
             )
           )

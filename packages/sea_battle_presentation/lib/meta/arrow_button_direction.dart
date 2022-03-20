@@ -1,0 +1,4 @@
+enum ArrowButtonDirection {
+  left,
+  right
+}

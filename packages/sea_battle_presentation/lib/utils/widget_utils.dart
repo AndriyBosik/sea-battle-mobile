@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/dto/widget_constraints.dart';
+import 'package:sea_battle_dto/dto/widget_constraints.dart';
 
 class WidgetUtils {
   static WidgetConstraints getWidgetConstraints(GlobalKey key) {

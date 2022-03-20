@@ -4,7 +4,6 @@ import 'package:sea_battle_presentation/logic/abstraction/progress_stages_builde
 
 class DefaultProgressStagesBuilder extends ProgressStagesBuilder {
   double _currentProgress = 0;
-  String _currentDescription = "";
   List<_Stage> _stages = [];
   List<_ProgressStage> _completedStages = [];
   Timer? _timer;
@@ -12,7 +11,6 @@ class DefaultProgressStagesBuilder extends ProgressStagesBuilder {
   @override
   ProgressStagesBuilder init() {
     _currentProgress = 0;
-    _currentDescription = "Initializing";
     _stages = [];
     _completedStages = [];
     _timer?.cancel();

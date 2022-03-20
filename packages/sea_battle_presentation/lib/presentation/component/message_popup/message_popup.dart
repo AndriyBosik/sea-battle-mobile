@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sea_battle_presentation/const/app_assets.dart';
+import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
+import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class MessagePopup extends StatelessWidget {
@@ -39,7 +40,7 @@ class MessagePopup extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Image.asset(
-                  AppAssets.pirateMapImage,
+                  AppAsset.pirateMapImage,
                   package: AppConst.packageName,
                 ),
                 Padding(
@@ -50,7 +51,7 @@ class MessagePopup extends StatelessWidget {
                       Text(
                         _message == null ? "" : _message!,
                         style: GoogleFonts.getFont(
-                          "Architects Daughter",
+                          SeaBattleTheme.secondaryFont,
                           fontSize: 25
                         ),
                       ),
@@ -58,7 +59,7 @@ class MessagePopup extends StatelessWidget {
                         child: Text(
                           "OK",
                           style: GoogleFonts.getFont(
-                            "Luckiest Guy",
+                            SeaBattleTheme.primaryFont,
                             color: Colors.white,
                             fontSize: 25,
                             letterSpacing: 5,

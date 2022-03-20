@@ -1,7 +1,7 @@
 import 'package:sea_battle_domain/module.dart';
 
 abstract class UserService {
-  Future<String?> createUser({
+  Future<AbstractError?> createUser({
     required User user
   });
 }

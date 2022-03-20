@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/dto/scroll_bar_context.dart';
-import 'package:sea_battle_presentation/dto/widget_constraints.dart';
+import 'package:sea_battle_dto/dto/scroll_bar_context.dart';
+import 'package:sea_battle_dto/dto/widget_constraints.dart';
 import 'package:sea_battle_presentation/utils/math_utils.dart';
 import 'package:sea_battle_presentation/utils/widget_utils.dart';
 

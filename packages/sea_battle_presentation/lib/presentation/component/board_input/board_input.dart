@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/const/app_assets.dart';
+import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
+import 'package:sea_battle_presentation/presentation/component/locale/locale_text_form_field/locale_text_form_field.dart';
 
 class BoardInput extends StatelessWidget {
   final TextEditingController _textController;
@@ -21,25 +23,25 @@ class BoardInput extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Image.asset(
-            AppAssets.boardImage,
+            AppAsset.boardImage,
             package: AppConst.packageName,
             width: 300,
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(
-              50, 5, 50, 0,
+              50, 10, 50, 0,
             ),
-            child: TextFormField(
-              controller: _textController,
-              style: GoogleFonts.getFont(
-                "Architects Daughter",
+            child: LocaleTextFormField(
+              textEditingController: _textController,
+              textStyle: GoogleFonts.getFont(
+                SeaBattleTheme.secondaryFont,
                 fontSize: 30,
                 color: Colors.white.withOpacity(0.7),
                 fontWeight: FontWeight.bold
               ),
-              decoration: InputDecoration(
+              inputDecoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "Type nickname",
+                hintText: "typeNickname",
                 hintStyle: TextStyle(
                   fontSize: 20,
                   color: Colors.white.withOpacity(0.4)

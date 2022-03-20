@@ -3,18 +3,19 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:sea_battle_api/module.dart';
 import 'package:sea_battle_business_logic/module.dart';
-import 'package:sea_battle_business_logic/service/abstraction/user_context_service.dart';
-import 'package:sea_battle_business_logic/service/implementation/default_user_context_service.dart';
-import 'package:sea_battle_domain/module.dart';
+import 'package:sea_battle_converter/converter/abstraction/converter.dart';
+import 'package:sea_battle_converter/converter/implementation/app_context_json_converter.dart';
+import 'package:sea_battle_converter/converter/implementation/user_json_converter.dart';
+import 'package:sea_battle_domain/module.dart' as domain;
+import 'package:sea_battle_dto/dto/first_setup.dart';
 import 'package:sea_battle_entity/module.dart';
 import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
+import 'package:sea_battle_mapper/mapper/implementation/first_setup_to_app_context_mapper.dart';
 import 'package:sea_battle_mapper/module.dart';
-import 'package:sea_battle_model/model/user_model.dart';
+import 'package:sea_battle_model/module.dart';
 import 'package:sea_battle_presentation/module.dart';
-import 'package:sea_battle_repository/repository/abstraction/user_context_repository.dart';
-import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';
-import 'package:sea_battle_repository/repository/implementation/default_user_context_repository.dart';
-import 'package:sea_battle_repository/repository/implementation/default_user_repository.dart';
+import 'package:sea_battle_presentation/presentation/app.dart';
+import 'package:sea_battle_repository/module.dart';
 
 class DIContainer {
   static final DIContainer _instance = DIContainer._privateConstructor();
@@ -37,10 +38,19 @@ class DIContainer {
     final String apiUrl = dotenv.env["API_URL"]!;
 
     /* Mappers */
+    final Mapper<AppContextEntity?, AppContextModel?> appContextEntityToAppContextModelMapper =
+      AppContextEntityToAppContextModelMapper();
+    final Mapper<AppContextModel?, AppContextEntity?> appContextModelToAppContextEntityMapper =
+      AppContextModelToAppContextEntityMapper();
+    final Mapper<AppContextModel?, domain.AppContext?> appContextModelToAppContextMapper =
+      AppContextModelToAppContextMapper();
+    final Mapper<domain.AppContext?, AppContextModel?> appContextToAppContextModelMapper =
+      AppContextToAppContextModelMapper();
+    final Mapper<FirstSetup?, domain.AppContext?> firstSetupToAppContextMapper = FirstSetupToAppContextMapper();
     final Mapper<UserEntity?, UserModel?> userEntityToUserModelMapper = UserEntityToUserModelMapper();
     final Mapper<UserModel?, UserEntity?> userModelToUserEntityMapper = UserModelToUserEntityMapper();
-    final Mapper<UserModel?, User?> userModelToUserMapper = UserModelToUserMapper();
-    final Mapper<User?, UserModel?> userToUserModelMapper = UserToUserModelMapper();
+    final Mapper<UserModel?, domain.User?> userModelToUserMapper = UserModelToUserMapper();
+    final Mapper<domain.User?, UserModel?> userToUserModelMapper = UserToUserModelMapper();
     
     /* httpClient */
     final httpClient = http.Client();
@@ -48,40 +58,72 @@ class DIContainer {
     /* Hive */
     HiveInterface hive = Hive;
 
-    /* JsonDeserializers */
-    final JsonService<UserEntity> userJsonDeserializer = UserJsonService();
+    /* Converters */
+    final Converter<Map<String, dynamic>, UserEntity> userJsonConverter = UserJsonConverter();
+    final Converter<Map<String, dynamic>, AppContextEntity> appContextJsonConverter = AppContextJsonConverter();
     
     /* ApiClients */
     final UserClient userClient = DefaultUserClient(
       apiUrl: apiUrl,
       httpClient: httpClient,
-      userJsonService: userJsonDeserializer);
+      userJsonConverter: userJsonConverter);
     
     /* LocalStorage */
-    final UserContext userContext = DefaultUserContext(
-      hive: hive);
+    final AppContext appContext = DefaultAppContext(
+      hive: hive,
+      appContextJsonConverter: appContextJsonConverter);
 
     /* Repositories */
     final UserRepository userRepository = DefaultUserRepository(
       userEntityToUserModelMapper: userEntityToUserModelMapper,
       userModelToUserEntityMapper: userModelToUserEntityMapper,
       userClient: userClient);
-    final UserContextRepository userContextRepository = DefaultUserContextRepository(
-      userContext: userContext);
+    final AppContextRepository appContextRepository = DefaultAppContextRepository(
+      appContext: appContext,
+      modelToEntityMapper: appContextModelToAppContextEntityMapper,
+      entityToModelMapper: appContextEntityToAppContextModelMapper);
     
     /* Validators */
-    final Validator<User> userValidator = UserValidator();
+    final Validator<domain.User> userValidator = UserValidator();
     
     /* Services */
     final UserService userService = DefaultUserService(
       userValidator: userValidator,
       userToUserModelMapper: userToUserModelMapper,
       userRepository: userRepository);
-    final UserContextService userContextService = DefaultUserContextService(
-      userContextRepository: userContextRepository);
+    final AppContextService appContextService = DefaultAppContextService(
+      appContextRepository: appContextRepository,
+      modelMapper: appContextModelToAppContextMapper,
+      toModelMapper: appContextToAppContextModelMapper);
 
     /* Builders */
     ProgressStagesBuilder progressStagesBuilder = DefaultProgressStagesBuilder();
+
+    /* Copiers */
+    FirstSetupCopier firstSetupCopier = DefaultFirstSetupCopier();
+
+    /* ErrorLocalizers */
+    ErrorLocalizer<domain.EmptyStringError> emptyStringErrorLocalizer = EmptyStringErrorLocalizer();
+    ErrorLocalizer<domain.ExistingError> existingErrorLocalizer = ExistingErrorLocalizer();
+    ErrorLocalizer<domain.ShortStringError> shortStringErrorLocalizer = ShortStringErrorLocalizer();
+    ErrorLocalizer<domain.UnknownError> unknownErrorLocalizer = UnknownErrorLocalizer();
+
+    /* Handlers */
+    List<FirstSetupStepHandler> stepHandlers = [
+      FirstSetupLanguageStepHandler(),
+      FirstSetupNicknameStepHandler(
+        userService: userService,
+        appContextService: appContextService,
+        firstSetupCopier: firstSetupCopier,
+        mapper: firstSetupToAppContextMapper,
+        errorLocalizers: [
+          emptyStringErrorLocalizer,
+          existingErrorLocalizer,
+          shortStringErrorLocalizer,
+          unknownErrorLocalizer
+        ]
+      )
+    ];
 
     /* Pages */
     final HomePage homePage = HomePage(
@@ -89,46 +131,49 @@ class DIContainer {
 
     const ErrorPage errorPage = ErrorPage();
 
-    final StartPage startPage = StartPage(
-      userService: userService,
-      userContextService: userContextService);
+    final FirstSetupPage firstSetupPage = FirstSetupPage(
+      stepHandlers: stepHandlers);
     
     final PosterPage posterPage = PosterPage(
-      userContextService: userContextService);
-    
-    final LanguageSelectionPage languageSelectionPage = LanguageSelectionPage();
+      appContextService: appContextService);
 
     /* AppRouter */
     final AppRouter appRouter = DefaultAppRouter(
       posterPage: posterPage,
       errorPage: errorPage,
       homePage: homePage,
-      startPage: startPage,
-      languageSelectionPage: languageSelectionPage
+      firstSetupPage: firstSetupPage
     );
 
     /* App */
-    final SeaBattleApp seaBattleApp = SeaBattleApp(
+    final AppView appView = AppView(
       appRouter: appRouter,
-      body: posterPage
+      body: posterPage,
     );
+
+    final SeaBattleApp seaBattleApp = SeaBattleApp(
+      appView: appView,
+    );
+
+    final App app = App(mainScreen: seaBattleApp);
 
     return {
       http.Client: httpClient,
       HiveInterface: hive,
-      JsonService<UserEntity>: userJsonDeserializer,
+      Converter<Map<String, dynamic>, UserEntity>: userJsonConverter,
       UserClient: userClient,
-      UserContext: userContext,
+      AppContext: appContext,
       Mapper<UserEntity?, UserModel?>: userEntityToUserModelMapper,
       Mapper<UserModel?, UserEntity?>: userModelToUserEntityMapper,
-      Mapper<UserModel?, User?>: userModelToUserMapper,
+      Mapper<UserModel?, domain.User?>: userModelToUserMapper,
       UserRepository: userRepository,
       UserService: userService,
-      StartPage: startPage,
+      FirstSetupPage: firstSetupPage,
       HomePage: homePage,
       ErrorPage: errorPage,
       AppRouter: appRouter,
-      SeaBattleApp: seaBattleApp
+      SeaBattleApp: seaBattleApp,
+      App: app
     };
   }
 }

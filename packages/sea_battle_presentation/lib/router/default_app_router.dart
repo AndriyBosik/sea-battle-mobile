@@ -1,50 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/const/app_routes.dart';
+import 'package:sea_battle_presentation/const/app_route.dart';
 import 'package:sea_battle_presentation/presentation/page/error/error_page.dart';
+import 'package:sea_battle_presentation/presentation/page/first_setup/first_setup_page.dart';
 import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
-import 'package:sea_battle_presentation/presentation/page/language_selection/language_selection_page.dart';
 import 'package:sea_battle_presentation/presentation/page/poster/poster_page.dart';
-import 'package:sea_battle_presentation/presentation/page/start/start_page.dart';
 import 'package:sea_battle_presentation/router/app_router.dart';
 
 class DefaultAppRouter implements AppRouter {
   final PosterPage _posterPage;
-  final StartPage _startPage;
+  final FirstSetupPage _firstSetupPage;
   final HomePage _homePage;
   final ErrorPage _errorPage;
-  final LanguageSelectionPage _languageSelectionPage;
 
   DefaultAppRouter({
     required PosterPage posterPage,
-    required StartPage startPage,
+    required FirstSetupPage firstSetupPage,
     required HomePage homePage,
-    required ErrorPage errorPage,
-    required LanguageSelectionPage languageSelectionPage
+    required ErrorPage errorPage
   }):
     _posterPage = posterPage,
-    _startPage = startPage,
+    _firstSetupPage = firstSetupPage,
     _homePage = homePage,
-    _errorPage = errorPage,
-    _languageSelectionPage = languageSelectionPage;
+    _errorPage = errorPage;
 
   @override
   Route onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoutes.poster:
+      case AppRoute.poster:
         return MaterialPageRoute(
           builder: (_) => _posterPage
         );
-      case AppRoutes.start:
+      case AppRoute.firstSetup:
         return MaterialPageRoute(
-          builder: (_) => _startPage
+          builder: (_) => _firstSetupPage
         );
-      case AppRoutes.home:
+      case AppRoute.home:
         return MaterialPageRoute(
           builder: (_) => _homePage
-        );
-      case AppRoutes.languageSelection:
-        return MaterialPageRoute(
-          builder: (_) => _languageSelectionPage
         );
       default:
         return MaterialPageRoute(

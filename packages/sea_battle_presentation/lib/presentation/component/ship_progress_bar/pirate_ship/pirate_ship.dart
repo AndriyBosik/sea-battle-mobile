@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sea_battle_presentation/const/app_assets.dart';
+import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
+import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 
 class PirateShip extends StatelessWidget {
   final double height;
@@ -21,7 +22,7 @@ class PirateShip extends StatelessWidget {
         SizedBox(
           height: height,
           child: Image.asset(
-            AppAssets.pirateShipImage,
+            AppAsset.pirateShipImage,
             package: AppConst.packageName,
           )
         ),
@@ -30,8 +31,8 @@ class PirateShip extends StatelessWidget {
           child: Text(
             "$progressValue %",
             style: GoogleFonts.getFont(
-              "Luckiest Guy",
-              color: Colors.white.withOpacity(0.7),
+              SeaBattleTheme.primaryFont,
+              color: Colors.white,
               fontSize: 15,
               fontWeight: FontWeight.bold,
               shadows: <Shadow>[

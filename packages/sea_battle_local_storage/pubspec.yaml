@@ -1,6 +1,7 @@
 name: sea_battle_local_storage
 description: A new Flutter package project.
 version: 0.0.1
+publish_to: 'none'
 homepage:
 
 environment:
@@ -11,6 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
   hive: ^2.0.6
+  sea_battle_entity:
+    path: ../sea_battle_entity
+  sea_battle_converter:
+    path: ../sea_battle_converter
 
 dev_dependencies:
   flutter_test:

@@ -17,6 +17,8 @@ dependencies:
     path: ../sea_battle_model
   sea_battle_domain:
     path: ../sea_battle_domain
+  sea_battle_dto:
+    path: ../sea_battle_dto
 
 dev_dependencies:
   flutter_test:

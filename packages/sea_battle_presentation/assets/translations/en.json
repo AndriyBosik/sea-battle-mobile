@@ -1,0 +1,17 @@
+{
+    "next": "Next",
+    "back": "Back",
+    "loaded": "Loaded",
+    "start": "Start",
+    "typeNickname": "Type nickname",
+    "loadingYourData": "Loading your data",
+    "loadingImages": "Loading images",
+    "finishingSomeThings": "Finishing some things",
+    "initializing": "Initializing",
+    "nickname": "Nickname",
+    "user": "User",
+
+    "emptyStringError": "{field} must not be empty",
+    "existingError": "Such {dataType} already exists",
+    "shortStringError": "The {field} field must be at least {length} characters long"
+}

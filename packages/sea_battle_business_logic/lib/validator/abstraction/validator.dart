@@ -1,3 +1,5 @@
+import 'package:sea_battle_domain/module.dart';
+
 abstract class Validator<T> {
-  String? validate(T object);
+  AbstractError? validate(T object);
 }
