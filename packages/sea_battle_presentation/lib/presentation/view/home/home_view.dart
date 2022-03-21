@@ -20,7 +20,14 @@ class HomeView extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: _mapStateToChild(_state)
+        child: AnimatedSwitcher(
+          duration: const Duration(seconds: 1),
+          transitionBuilder: (child, animation) => FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+          child: _mapStateToChild(_state),
+        )
       )
     );
   }
