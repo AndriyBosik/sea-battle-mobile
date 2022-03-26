@@ -4,6 +4,8 @@ import 'package:sea_battle_presentation/controller/state/home_page/abstract_home
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 import 'package:sea_battle_presentation/presentation/component/ship_progress_bar/ship_progress_bar.dart';
+import 'package:sea_battle_presentation/presentation/component/user_coins/user_coins.dart';
+import 'package:sea_battle_presentation/presentation/component/user_score/user_score.dart';
 
 class HomeView extends StatelessWidget {
   final AbstractHomePageState _state;
@@ -47,8 +49,23 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _getUserProfileChild(AbstractHomePageState state) {
-    return const LocaleText(
-      textKey: LocaleKey.loaded
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              UserScore(
+                score: 500
+              ),
+              UserCoins(
+                coins: 3000
+              )
+            ]
+          ),
+        )
+      ],
     );
   }
 }
