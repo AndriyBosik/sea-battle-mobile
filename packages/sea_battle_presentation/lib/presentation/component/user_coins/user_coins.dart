@@ -3,8 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 class UserCoins extends StatelessWidget {
+  static const double _animationValue = 0.2;
+
   final int _coins;
 
   const UserCoins({
@@ -39,10 +42,21 @@ class UserCoins extends StatelessWidget {
         ),
         SizedBox(
           height: 40,
-          child: Image.asset(
-            AppAsset.pirateCoinImage,
-            package: AppConst.packageName,
-          )
+          child: LoopAnimation<double>(
+            tween: Tween<double>(begin: -_animationValue, end: _animationValue),
+            duration: const Duration(seconds: 1),
+            builder: (context, child, value) {
+              final double trueValue = _animationValue - value.abs();
+              return Transform.rotate(
+                angle: trueValue,
+                child: child,
+              );
+            },
+            child: Image.asset(
+              AppAsset.pirateCoinImage,
+              package: AppConst.packageName,
+            )
+          ),
         )
       ],
     );

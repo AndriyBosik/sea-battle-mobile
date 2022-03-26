@@ -3,8 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 class UserScore extends StatelessWidget {
+  static const double _beginTween = 1;
+  static const double _endTween = 1.1;
+  static const double _halfTween = (_beginTween + _endTween) / 2;
+  static const double _minYScale = 0.9;
+
   final int _score;
 
   const UserScore({
@@ -21,9 +27,19 @@ class UserScore extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Image.asset(
-            AppAsset.boardImage,
-            package: AppConst.packageName,
+          LoopAnimation<double>(
+            tween: Tween<double>(begin: _beginTween, end: _endTween),
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeInOutSine,
+            builder: (context, child, value) => Transform.scale(
+              scaleX: value > _halfTween ? _beginTween + _endTween - value : value,
+              scaleY: value <= _halfTween ? _minYScale*value/_halfTween : _minYScale*(_beginTween + _endTween - value)/_halfTween,
+              child: child,
+            ),
+            child: Image.asset(
+              AppAsset.boardImage,
+              package: AppConst.packageName,
+            ),
           ),
           Center(
             child: Text(
