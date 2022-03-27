@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
-import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
+import 'package:sea_battle_presentation/presentation/component/menu/menu.dart';
 import 'package:sea_battle_presentation/presentation/component/ship_progress_bar/ship_progress_bar.dart';
 import 'package:sea_battle_presentation/presentation/component/user_coins/user_coins.dart';
 import 'package:sea_battle_presentation/presentation/component/user_score/user_score.dart';
@@ -64,6 +63,10 @@ class HomeView extends StatelessWidget {
               )
             ]
           ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 30),
+          child: Menu()
         )
       ],
     );

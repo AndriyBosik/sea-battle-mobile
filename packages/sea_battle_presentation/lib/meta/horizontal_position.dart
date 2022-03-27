@@ -1,0 +1,4 @@
+enum HorizontalPosition {
+  left,
+  right
+}
