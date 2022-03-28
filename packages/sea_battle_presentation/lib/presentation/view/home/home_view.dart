@@ -18,17 +18,15 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: AnimatedSwitcher(
-          duration: const Duration(seconds: 1),
-          transitionBuilder: (child, animation) => FadeTransition(
-            opacity: animation,
-            child: child,
-          ),
-          child: _mapStateToChild(_state),
-        )
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: AnimatedSwitcher(
+        duration: const Duration(seconds: 1),
+        transitionBuilder: (child, animation) => FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
+        child: _mapStateToChild(_state),
       )
     );
   }
@@ -48,24 +46,26 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _getUserProfileChild(AbstractHomePageState state) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              UserScore(
-                score: 500
-              ),
-              UserCoins(
-                coins: 3000
-              )
-            ]
+    return Stack(
+      fit: StackFit.expand,
+      alignment: Alignment.center,
+      children: const [
+        Positioned(
+          top: 20,
+          left: 20,
+          child: UserScore(
+            score: 500,
+          )
+        ),
+        Positioned(
+          top: 20,
+          right: 20,
+          child: UserCoins(
+            coins: 3000,
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(top: 30),
+        Positioned(
+          bottom: 50,
           child: Menu()
         )
       ],

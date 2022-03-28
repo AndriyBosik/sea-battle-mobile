@@ -26,7 +26,6 @@ class HomePage extends StatelessWidget {
         builder: (context, state) => Scaffold(
           backgroundColor: Colors.transparent,
           body: Stack(
-            alignment: Alignment.center,
             children: [
               const AppBackground(),
               HomeView(state: state)
