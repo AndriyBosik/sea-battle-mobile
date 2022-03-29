@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sea_battle_presentation/const/app_asset.dart';
+import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/meta/horizontal_position.dart';
+import 'package:sea_battle_presentation/presentation/component/menu/play/play.dart';
+import 'package:sea_battle_presentation/presentation/component/menu/rating/rating.dart';
+import 'package:sea_battle_presentation/presentation/component/menu/settings/settings.dart';
+import 'package:sea_battle_presentation/presentation/component/menu/shop/shop.dart';
 import 'package:sea_battle_presentation/presentation/component/menu_item/menu_item.dart';
 
 class Menu extends StatelessWidget {
@@ -20,11 +25,11 @@ class Menu extends StatelessWidget {
           children: const [
             MenuItem(
               itemName: "Play",
-              itemImage: AppAsset.pirateSwordsImage
+              child: Play()
             ),
             MenuItem(
               itemName: "Rating",
-              itemImage: AppAsset.cupImage
+              child: Rating()
             ),
           ]
         ),
@@ -34,12 +39,12 @@ class Menu extends StatelessWidget {
           children: const [
             MenuItem(
               itemName: "Shop",
-              itemImage: AppAsset.pirateBoxImage,
+              child: Shop(),
               imagePosition: HorizontalPosition.right,
             ),
             MenuItem(
               itemName: "Settings",
-              itemImage: AppAsset.wheelImage,
+              child: Settings(),
               imagePosition: HorizontalPosition.right,
             ),
           ],

@@ -6,17 +6,17 @@ import 'package:sea_battle_presentation/meta/horizontal_position.dart';
 
 class MenuItem extends StatelessWidget {
   final String _itemName;
-  final String _itemImage;
+  final Widget _child;
   final HorizontalPosition _imagePosition;
 
   const MenuItem({
     Key? key,
     required String itemName,
-    required String itemImage,
+    required Widget child,
     HorizontalPosition imagePosition = HorizontalPosition.left
   }):
     _itemName = itemName,
-    _itemImage = itemImage,
+    _child = child,
     _imagePosition = imagePosition,
     super(key: key);
 
@@ -26,18 +26,17 @@ class MenuItem extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Row(
         children: _imagePosition == HorizontalPosition.left ? (
-          [_getImage(), _getText()]
+          [_getChild(), _getText()]
         ) : (
-          [_getText(), _getImage()]
+          [_getText(), _getChild()]
         ),
       ),
     );
   }
 
-  Widget _getImage() => Image.asset(
-    _itemImage,
+  Widget _getChild() => SizedBox(
     height: 70,
-    package: AppConst.packageName,
+    child: _child,
   );
 
   Widget _getText() => Padding(
