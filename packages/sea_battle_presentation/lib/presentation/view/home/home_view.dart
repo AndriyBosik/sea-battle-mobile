@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
+import 'package:sea_battle_presentation/controller/state/home_page/home_page_loaded_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
 import 'package:sea_battle_presentation/presentation/component/menu/menu.dart';
 import 'package:sea_battle_presentation/presentation/component/ship_progress_bar/ship_progress_bar.dart';
@@ -35,7 +36,7 @@ class HomeView extends StatelessWidget {
     if (state is HomePageLoadingState) {
       return _getLoadingChild(state);
     }
-    return _getUserProfileChild(state);
+    return _getUserProfileChild(state as HomePageLoadedState);
   }
 
   Widget _getLoadingChild(HomePageLoadingState state) {
@@ -45,26 +46,27 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _getUserProfileChild(AbstractHomePageState state) {
+  Widget _getUserProfileChild(HomePageLoadedState state) {
     return Stack(
       fit: StackFit.expand,
       alignment: Alignment.center,
-      children: const [
+      children: [
         Positioned(
           top: 20,
           left: 20,
           child: UserScore(
-            score: 500,
+            score: state.userStats.score,
+            nickname: state.userStats.nickname,
           )
         ),
         Positioned(
           top: 20,
           right: 20,
           child: UserCoins(
-            coins: 3000,
+            coins: state.userStats.coins,
           ),
         ),
-        Positioned(
+        const Positioned(
           bottom: 50,
           child: Menu()
         )

@@ -6,6 +6,7 @@ import 'package:sea_battle_business_logic/sea_battle_business_logic.dart';
 import 'package:sea_battle_converter/converter/abstraction/converter.dart';
 import 'package:sea_battle_converter/converter/implementation/app_context_json_converter.dart';
 import 'package:sea_battle_converter/converter/implementation/user_json_converter.dart';
+import 'package:sea_battle_converter/sea_battle_converter.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart' as domain;
 import 'package:sea_battle_dto/dto/first_setup.dart';
 import 'package:sea_battle_entity/sea_battle_entity.dart';
@@ -50,6 +51,8 @@ class DIContainer {
     final Mapper<UserEntity?, UserModel?> userEntityToUserModelMapper = UserEntityToUserModelMapper();
     final Mapper<UserModel?, UserEntity?> userModelToUserEntityMapper = UserModelToUserEntityMapper();
     final Mapper<UserModel?, domain.User?> userModelToUserMapper = UserModelToUserMapper();
+    final Mapper<UserStatsEntity?, UserStatsModel?> userStatsEntityToUserModelMapper = UserStatsEntityToUserStatsModelMapper();
+    final Mapper<UserStatsModel?, domain.UserStats?> userStatsModelToUserStatsMapper = UserStatsModelToUserStatsMapper();
     final Mapper<domain.User?, UserModel?> userToUserModelMapper = UserToUserModelMapper();
     
     /* httpClient */
@@ -59,14 +62,16 @@ class DIContainer {
     HiveInterface hive = Hive;
 
     /* Converters */
-    final Converter<Map<String, dynamic>, UserEntity> userJsonConverter = UserJsonConverter();
     final Converter<Map<String, dynamic>, AppContextEntity> appContextJsonConverter = AppContextJsonConverter();
+    final Converter<Map<String, dynamic>, UserEntity> userJsonConverter = UserJsonConverter();
+    final Converter<Map<String, dynamic>, UserStatsEntity> userStatsJsonConverter = UserStatsJsonConverter();
     
     /* ApiClients */
     final UserClient userClient = DefaultUserClient(
       apiUrl: apiUrl,
       httpClient: httpClient,
-      userJsonConverter: userJsonConverter);
+      userJsonConverter: userJsonConverter,
+      userStatsJsonConverter: userStatsJsonConverter);
     
     /* LocalStorage */
     final AppContext appContext = DefaultAppContext(
@@ -77,6 +82,7 @@ class DIContainer {
     final UserRepository userRepository = DefaultUserRepository(
       userEntityToUserModelMapper: userEntityToUserModelMapper,
       userModelToUserEntityMapper: userModelToUserEntityMapper,
+      userStatsEntityToUserStatsModelMapper: userStatsEntityToUserModelMapper,
       userClient: userClient);
     final AppContextRepository appContextRepository = DefaultAppContextRepository(
       appContext: appContext,
@@ -90,6 +96,7 @@ class DIContainer {
     final UserService userService = DefaultUserService(
       userValidator: userValidator,
       userToUserModelMapper: userToUserModelMapper,
+      userStatsModelToUserStatsMapper: userStatsModelToUserStatsMapper,
       userRepository: userRepository);
     final AppContextService appContextService = DefaultAppContextService(
       appContextRepository: appContextRepository,
@@ -127,7 +134,9 @@ class DIContainer {
 
     /* Pages */
     final HomePage homePage = HomePage(
-      progressStagesBuilder: progressStagesBuilder);
+      progressStagesBuilder: progressStagesBuilder,
+      userService: userService,
+      appContextService: appContextService,);
 
     const ErrorPage errorPage = ErrorPage();
 

@@ -11,15 +11,18 @@ class DefaultUserClient implements UserClient {
   final String _apiUrl;
   final http.Client _httpClient;
   final Converter<Map<String, dynamic>, UserEntity> _userJsonConverter;
+  final Converter<Map<String, dynamic>, UserStatsEntity> _userStatsJsonConverter;
 
   DefaultUserClient({
     required String apiUrl,
     required http.Client httpClient,
-    required Converter<Map<String, dynamic>, UserEntity> userJsonConverter
+    required Converter<Map<String, dynamic>, UserEntity> userJsonConverter,
+    required Converter<Map<String, dynamic>, UserStatsEntity> userStatsJsonConverter
   }):
     _apiUrl = apiUrl,
     _httpClient = httpClient,
-    _userJsonConverter = userJsonConverter;
+    _userJsonConverter = userJsonConverter,
+    _userStatsJsonConverter = userStatsJsonConverter;
 
   @override
   Future<UserEntity?> getUserByNickname(String nickname) async {
@@ -27,7 +30,7 @@ class DefaultUserClient implements UserClient {
     final Uri url = Uri.parse(urlPath);
 
     final response = await _httpClient.get(url);
-    if (response .statusCode != 200) {
+    if (response.statusCode != 200) {
       throw UserRequestFailure();
     }
 
@@ -48,5 +51,19 @@ class DefaultUserClient implements UserClient {
     if (response.statusCode != 200) {
       throw UserRequestFailure();
     }
+  }
+
+  @override
+  Future<UserStatsEntity?> getUserStatsByNickname(String nickname) async {
+    final String urlPath = Api.getUserStats.withBaseUrl(_apiUrl, {"nickname": nickname});
+    final Uri url = Uri.parse(urlPath);
+
+    final response = await _httpClient.get(url);
+    if (response.statusCode != 200) {
+      throw UserRequestFailure();
+    }
+
+    final Map<String, dynamic>? json = convert.jsonDecode(response.body) as Map<String, dynamic>?;
+    return _userStatsJsonConverter.deserialize(json);
   }
 }

@@ -12,12 +12,15 @@ class UserScore extends StatelessWidget {
   static const double _minYScale = 0.9;
 
   final int _score;
+  final String _nickname;
 
   const UserScore({
     Key? key,
-    required int score
+    required int score,
+    required String nickname
   }):
     _score = score,
+    _nickname = nickname,
     super(key: key);
   
   @override
@@ -43,7 +46,7 @@ class UserScore extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Andrew($_score)",
+              "$_nickname($_score)",
               style: GoogleFonts.getFont(
                 SeaBattleTheme.secondaryFont,
                 fontSize: 25,

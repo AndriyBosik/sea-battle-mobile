@@ -6,4 +6,6 @@ abstract class UserClient {
   Future<void> createUser({
     required UserEntity user
   });
+
+  Future<UserStatsEntity?> getUserStatsByNickname(String nickname);
 }

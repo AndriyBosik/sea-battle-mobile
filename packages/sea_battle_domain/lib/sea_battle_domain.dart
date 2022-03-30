@@ -1,7 +1,8 @@
 library sea_battle_domain;
 
-export 'domain/user.dart';
 export 'domain/app_context.dart';
+export 'domain/user.dart';
+export 'domain/user_stats.dart';
 
 export 'error/abstract_error.dart';
 export 'error/empty_string_error.dart';
