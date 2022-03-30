@@ -1,0 +1,3 @@
+enum AnimationProperty {
+  value
+}
