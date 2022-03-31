@@ -2,7 +2,6 @@ import 'package:sea_battle_business_logic/service/abstraction/user_service.dart'
 import 'package:sea_battle_domain/sea_battle_domain.dart';
 import 'package:sea_battle_presentation/controller/cubit/base_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/rating_page/abstract_rating_page_state.dart';
-import 'package:sea_battle_presentation/controller/state/rating_page/rating_page_home_button_pressed_state.dart';
 import 'package:sea_battle_presentation/controller/state/rating_page/rating_page_loading_state.dart';
 import 'package:sea_battle_presentation/controller/state/rating_page/rating_page_rating_loaded_state.dart';
 
@@ -22,9 +21,5 @@ class RatingPageCubit extends BaseCubit<AbstractRatingPageState> {
     emitIfOpened(RatingPageRatingLoadedState(
       ratedUsers: ratedUsers
     ));
-  }
-
-  void onBackPressed() {
-    emit(RatingPageHomeButtonPressedState());
   }
 }

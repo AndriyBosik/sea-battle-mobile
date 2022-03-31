@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart';
 import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
-import 'package:sea_battle_presentation/controller/cubit/rating_page_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/rating_page/abstract_rating_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/rating_page/rating_page_loading_state.dart';
 import 'package:sea_battle_presentation/controller/state/rating_page/rating_page_rating_loaded_state.dart';
@@ -50,9 +46,9 @@ class RatingView extends StatelessWidget {
             left: 10,
             bottom: 10,
             child: ArrowButton(
-              onTap: () => BlocProvider.of<RatingPageCubit>(context).onBackPressed(),
+              onTap: () => Navigator.of(context).pop(),
               direction: ArrowButtonDirection.left,
-              textKey: LocaleKey.home,
+              textKey: LocaleKey.back,
             )
           )
         ],
