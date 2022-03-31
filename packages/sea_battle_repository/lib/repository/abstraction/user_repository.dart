@@ -13,4 +13,6 @@ abstract class UserRepository {
   Future<UserStatsModel?> getUserStatsByNickname({
     required String nickname
   });
+
+  Future<List<RatedUserModel>> getRatedUsers();
 }

@@ -7,6 +7,7 @@ import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/meta/arrow_button_direction.dart';
 import 'package:sea_battle_presentation/meta/text_case.dart';
+import 'package:sea_battle_presentation/presentation/component/animation/scaling_widget/scaling_widget.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 
 class ArrowButton extends StatefulWidget {
@@ -99,7 +100,10 @@ class _ArrowButtonState extends State<ArrowButton> with TickerProviderStateMixin
     return widget._direction == ArrowButtonDirection.right ? image : Transform(
       transform: Matrix4.rotationY(pi),
       alignment: Alignment.center,
-      child: image
+      child: ScalingWidget(
+        beginValue: 0.95,
+        child: image
+      )
     );
   }
 

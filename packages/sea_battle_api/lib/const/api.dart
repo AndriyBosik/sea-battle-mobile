@@ -3,7 +3,8 @@ import 'package:format/format.dart';
 enum Api {
   createUser,
   getUser,
-  getUserStats
+  getUserStats,
+  getRatedUsers,
 }
 
 extension _ApiPath on Api {
@@ -15,6 +16,8 @@ extension _ApiPath on Api {
         return "/api/users";
       case Api.getUserStats:
         return "/api/users/{nickname}/stats";
+      case Api.getRatedUsers:
+        return "/api/users/rated";
     }
   }
 }

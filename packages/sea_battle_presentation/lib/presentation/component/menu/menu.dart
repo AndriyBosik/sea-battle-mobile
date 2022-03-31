@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_presentation/const/app_asset.dart';
-import 'package:sea_battle_presentation/const/app_const.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/meta/horizontal_position.dart';
 import 'package:sea_battle_presentation/presentation/component/menu/play/play.dart';
 import 'package:sea_battle_presentation/presentation/component/menu/rating/rating.dart';
@@ -9,9 +8,14 @@ import 'package:sea_battle_presentation/presentation/component/menu/shop/shop.da
 import 'package:sea_battle_presentation/presentation/component/menu_item/menu_item.dart';
 
 class Menu extends StatelessWidget {
+  final MenuClickListeners _menuClickListeners;
+
   const Menu({
-    Key? key
-  }): super(key: key);
+    Key? key,
+    required MenuClickListeners menuClickListeners
+  }):
+    _menuClickListeners = menuClickListeners,
+    super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +26,15 @@ class Menu extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: const [
-            MenuItem(
+          children: [
+            const MenuItem(
               itemName: "Play",
               child: Play()
             ),
             MenuItem(
               itemName: "Rating",
-              child: Rating()
+              child: const Rating(),
+              onClick: _menuClickListeners.onRatingClick,
             ),
           ]
         ),

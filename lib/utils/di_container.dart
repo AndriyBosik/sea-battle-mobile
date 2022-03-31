@@ -3,15 +3,11 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:sea_battle_api/sea_battle_api.dart';
 import 'package:sea_battle_business_logic/sea_battle_business_logic.dart';
-import 'package:sea_battle_converter/converter/abstraction/converter.dart';
-import 'package:sea_battle_converter/converter/implementation/app_context_json_converter.dart';
-import 'package:sea_battle_converter/converter/implementation/user_json_converter.dart';
 import 'package:sea_battle_converter/sea_battle_converter.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart' as domain;
 import 'package:sea_battle_dto/dto/first_setup.dart';
 import 'package:sea_battle_entity/sea_battle_entity.dart';
 import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
-import 'package:sea_battle_mapper/mapper/implementation/first_setup_to_app_context_mapper.dart';
 import 'package:sea_battle_mapper/sea_battle_mapper.dart';
 import 'package:sea_battle_model/sea_battle_model.dart';
 import 'package:sea_battle_presentation/sea_battle_presentation.dart';
@@ -48,6 +44,8 @@ class DIContainer {
     final Mapper<domain.AppContext?, AppContextModel?> appContextToAppContextModelMapper =
       AppContextToAppContextModelMapper();
     final Mapper<FirstSetup?, domain.AppContext?> firstSetupToAppContextMapper = FirstSetupToAppContextMapper();
+    final Mapper<RatedUserEntity?, RatedUserModel?> ratedUserEntityToRatedUserModelMapper = RatedUserEntityToRatedUserModelMapper();
+    final Mapper<RatedUserModel?, domain.RatedUser?> ratedUserModelToRatedUserMapper = RatedUserModelToRatedUserMapper();
     final Mapper<UserEntity?, UserModel?> userEntityToUserModelMapper = UserEntityToUserModelMapper();
     final Mapper<UserModel?, UserEntity?> userModelToUserEntityMapper = UserModelToUserEntityMapper();
     final Mapper<UserModel?, domain.User?> userModelToUserMapper = UserModelToUserMapper();
@@ -63,6 +61,7 @@ class DIContainer {
 
     /* Converters */
     final Converter<Map<String, dynamic>, AppContextEntity> appContextJsonConverter = AppContextJsonConverter();
+    final Converter<Map<String, dynamic>, RatedUserEntity> ratedUserJsonConverter = RatedUserJsonConverter();
     final Converter<Map<String, dynamic>, UserEntity> userJsonConverter = UserJsonConverter();
     final Converter<Map<String, dynamic>, UserStatsEntity> userStatsJsonConverter = UserStatsJsonConverter();
     
@@ -71,7 +70,8 @@ class DIContainer {
       apiUrl: apiUrl,
       httpClient: httpClient,
       userJsonConverter: userJsonConverter,
-      userStatsJsonConverter: userStatsJsonConverter);
+      userStatsJsonConverter: userStatsJsonConverter,
+      ratedUserJsonConverter: ratedUserJsonConverter);
     
     /* LocalStorage */
     final AppContext appContext = DefaultAppContext(
@@ -83,6 +83,7 @@ class DIContainer {
       userEntityToUserModelMapper: userEntityToUserModelMapper,
       userModelToUserEntityMapper: userModelToUserEntityMapper,
       userStatsEntityToUserStatsModelMapper: userStatsEntityToUserModelMapper,
+      ratedUserEntityToRatedUserModelMapper: ratedUserEntityToRatedUserModelMapper,
       userClient: userClient);
     final AppContextRepository appContextRepository = DefaultAppContextRepository(
       appContext: appContext,
@@ -97,6 +98,7 @@ class DIContainer {
       userValidator: userValidator,
       userToUserModelMapper: userToUserModelMapper,
       userStatsModelToUserStatsMapper: userStatsModelToUserStatsMapper,
+      ratedUserModelToRatedUserMapper: ratedUserModelToRatedUserMapper,
       userRepository: userRepository);
     final AppContextService appContextService = DefaultAppContextService(
       appContextRepository: appContextRepository,
@@ -145,13 +147,18 @@ class DIContainer {
     
     final PosterPage posterPage = PosterPage(
       appContextService: appContextService);
+    
+    final RatingPage ratingPage = RatingPage(
+      userService: userService,
+    );
 
     /* AppRouter */
     final AppRouter appRouter = DefaultAppRouter(
       posterPage: posterPage,
       errorPage: errorPage,
       homePage: homePage,
-      firstSetupPage: firstSetupPage
+      firstSetupPage: firstSetupPage,
+      ratingPage: ratingPage
     );
 
     /* App */

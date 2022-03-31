@@ -11,5 +11,6 @@ class AppAsset {
   static const String pirateShipImage = "$_imagePrefix/pirate_ship.png";
   static const String boardArrowImage = "$_imagePrefix/arrow.png";
   static const String pirateSwordsImage = "$_imagePrefix/pirate_swords.png";
+  static const String scrollImage = "$_imagePrefix/scroll.png";
   static const String wheelImage = "$_imagePrefix/wheel.png";
 }

@@ -10,6 +10,7 @@
     "initializing": "Initializing",
     "nickname": "Nickname",
     "user": "User",
+    "home": "Home",
 
     "emptyStringError": "{field} must not be empty",
     "existingError": "Such {dataType} already exists",

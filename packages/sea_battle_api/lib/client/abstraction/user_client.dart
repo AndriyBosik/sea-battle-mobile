@@ -8,4 +8,6 @@ abstract class UserClient {
   });
 
   Future<UserStatsEntity?> getUserStatsByNickname(String nickname);
+
+  Future<List<RatedUserEntity>> getRatedUsers();
 }

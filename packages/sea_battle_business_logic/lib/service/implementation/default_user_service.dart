@@ -9,17 +9,20 @@ class DefaultUserService implements UserService {
   final Validator<User> _userValidator;
   final Mapper<User?, UserModel?> _userToUserModelMapper;
   final Mapper<UserStatsModel?, UserStats?> _userStatsModelToUserStatsMapper;
+  final Mapper<RatedUserModel?, RatedUser?> _ratedUserModelToRatedUserMapper;
   final UserRepository _userRepository;
 
   DefaultUserService({
     required Validator<User> userValidator,
     required Mapper<User?, UserModel?> userToUserModelMapper,
     required Mapper<UserStatsModel?, UserStats?> userStatsModelToUserStatsMapper,
+    required Mapper<RatedUserModel?, RatedUser?> ratedUserModelToRatedUserMapper,
     required UserRepository userRepository
   }):
     _userValidator = userValidator,
     _userToUserModelMapper = userToUserModelMapper,
     _userStatsModelToUserStatsMapper = userStatsModelToUserStatsMapper,
+    _ratedUserModelToRatedUserMapper = ratedUserModelToRatedUserMapper,
     _userRepository = userRepository;
   
   @override
@@ -49,4 +52,11 @@ class DefaultUserService implements UserService {
     );
   }
 
+  @override
+  Future<List<RatedUser>> getRatedUsers() async {
+    return (await _userRepository.getRatedUsers())
+      .map(_ratedUserModelToRatedUserMapper.map)
+      .map((item) => item!)
+      .toList();
+  }
 }

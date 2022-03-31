@@ -6,6 +6,7 @@ export "presentation/page/error/error_page.dart";
 export "presentation/page/first_setup/first_setup_page.dart";
 export "presentation/page/home/home_page.dart";
 export "presentation/page/poster/poster_page.dart";
+export "presentation/page/rating/rating_page.dart";
 
 export "handler/abstraction/error_localizer.dart";
 export "handler/abstraction/first_setup_step_handler.dart";

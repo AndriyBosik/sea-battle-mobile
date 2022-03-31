@@ -13,6 +13,7 @@ class Shop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScalingWidget(
+      beginValue: 0.9,
       child: Image.asset(
         AppAsset.pirateBoxImage,
         package: AppConst.packageName,

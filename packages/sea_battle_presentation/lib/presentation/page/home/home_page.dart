@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sea_battle_business_logic/service/abstraction/app_context_service.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/app_asset.dart';
+import 'package:sea_battle_presentation/const/app_route.dart';
 import 'package:sea_battle_presentation/controller/cubit/home_page_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
+import 'package:sea_battle_presentation/controller/state/home_page/home_page_rating_clicked_state.dart';
 import 'package:sea_battle_presentation/logic/abstraction/progress_stages_builder.dart';
 import 'package:sea_battle_presentation/presentation/component/background/background.dart';
 import 'package:sea_battle_presentation/presentation/view/home/home_view.dart';
@@ -33,7 +36,12 @@ class HomePage extends StatelessWidget {
         userService: _userService,
         appContextService: _appContextService
       )..loadUserData(),
-      child: BlocBuilder<HomePageCubit, AbstractHomePageState>(
+      child: BlocConsumer<HomePageCubit, AbstractHomePageState>(
+        listener: (context, state) {
+          if (state is HomePageRatingClickedState) {
+            Navigator.of(context).pushNamed(AppRoute.rating);
+          }
+        },
         builder: (context, state) => Scaffold(
           backgroundColor: Colors.transparent,
           body: Stack(
@@ -41,7 +49,12 @@ class HomePage extends StatelessWidget {
               const Background(
                 imageName: AppAsset.backgroundImage,
               ),
-              HomeView(state: state)
+              HomeView(
+                state: state,
+                menuClickListeners: MenuClickListeners(
+                  onRatingClick: () => BlocProvider.of<HomePageCubit>(context).onRatingButtonClick()
+                ),
+              )
             ],
           )
         ),

@@ -12,17 +12,20 @@ class DefaultUserClient implements UserClient {
   final http.Client _httpClient;
   final Converter<Map<String, dynamic>, UserEntity> _userJsonConverter;
   final Converter<Map<String, dynamic>, UserStatsEntity> _userStatsJsonConverter;
+  final Converter<Map<String, dynamic>, RatedUserEntity> _ratedUserJsonConverter;
 
   DefaultUserClient({
     required String apiUrl,
     required http.Client httpClient,
     required Converter<Map<String, dynamic>, UserEntity> userJsonConverter,
-    required Converter<Map<String, dynamic>, UserStatsEntity> userStatsJsonConverter
+    required Converter<Map<String, dynamic>, UserStatsEntity> userStatsJsonConverter,
+    required Converter<Map<String, dynamic>, RatedUserEntity> ratedUserJsonConverter
   }):
     _apiUrl = apiUrl,
     _httpClient = httpClient,
     _userJsonConverter = userJsonConverter,
-    _userStatsJsonConverter = userStatsJsonConverter;
+    _userStatsJsonConverter = userStatsJsonConverter,
+    _ratedUserJsonConverter = ratedUserJsonConverter;
 
   @override
   Future<UserEntity?> getUserByNickname(String nickname) async {
@@ -34,7 +37,7 @@ class DefaultUserClient implements UserClient {
       throw UserRequestFailure();
     }
 
-    final Map<String, dynamic>? json = convert.jsonDecode(response.body) as Map<String, dynamic>?;
+    final Map<String, dynamic>? json = convert.jsonDecode(convert.utf8.decode(response.bodyBytes)) as Map<String, dynamic>?;
     return _userJsonConverter.deserialize(json);
   }
 
@@ -63,7 +66,28 @@ class DefaultUserClient implements UserClient {
       throw UserRequestFailure();
     }
 
-    final Map<String, dynamic>? json = convert.jsonDecode(response.body) as Map<String, dynamic>?;
+    final Map<String, dynamic>? json = convert.jsonDecode(convert.utf8.decode(response.bodyBytes)) as Map<String, dynamic>?;
     return _userStatsJsonConverter.deserialize(json);
+  }
+
+  @override
+  Future<List<RatedUserEntity>> getRatedUsers() async {
+    final Uri url = Uri.parse(Api.getRatedUsers.withBaseUrl(_apiUrl));
+    
+    final http.Response response = await _httpClient.get(url);
+    if (response.statusCode != 200) {
+      throw UserRequestFailure();
+    }
+
+    final List<dynamic>? json = convert.jsonDecode(convert.utf8.decode(response.bodyBytes)) as List<dynamic>;
+    if (json == null) {
+      return [];
+    }
+    return json
+      .map((item) => item as Map<String, dynamic>)
+      .map((item) => _ratedUserJsonConverter.deserialize(item))
+      .where((item) => item != null)
+      .map((item) => item!)
+      .toList();
   }
 }

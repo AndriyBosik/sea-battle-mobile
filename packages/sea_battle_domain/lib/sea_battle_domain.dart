@@ -1,6 +1,7 @@
 library sea_battle_domain;
 
 export 'domain/app_context.dart';
+export 'domain/rated_user.dart';
 export 'domain/user.dart';
 export 'domain/user_stats.dart';
 

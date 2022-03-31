@@ -1,16 +1,17 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sea_battle_business_logic/service/abstraction/app_context_service.dart';
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
+import 'package:sea_battle_presentation/controller/cubit/base_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loaded_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
+import 'package:sea_battle_presentation/controller/state/home_page/home_page_rating_clicked_state.dart';
 import 'package:sea_battle_presentation/logic/abstraction/progress_stages_builder.dart';
 
-class HomePageCubit extends Cubit<AbstractHomePageState> {
+class HomePageCubit extends BaseCubit<AbstractHomePageState> {
   final ProgressStagesBuilder _progressStagesBuilder;
   final UserService _userService;
   final AppContextService _appContextService;
@@ -45,15 +46,19 @@ class HomePageCubit extends Cubit<AbstractHomePageState> {
       .start(
         onCompleted: () async {
           if (stats != null) {
-            emit(HomePageLoadedState(userStats: stats!));
+            emitIfOpened(HomePageLoadedState(userStats: stats!));
           }
         },
         onPercentageChanged: _onPercentageChanged
       );
   }
 
+  void onRatingButtonClick() {
+    emitIfOpened(HomePageRatingClickedState());
+  }
+
   void _onPercentageChanged(int currentProgress, String description) {
-    emit(HomePageLoadingState(
+    emitIfOpened(HomePageLoadingState(
       percentageValue: currentProgress*1.0,
       stageDescription: description
     ));

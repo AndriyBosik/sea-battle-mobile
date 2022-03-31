@@ -12,38 +12,21 @@ class BombLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoopAnimation<int>(
-      tween: IntTween(begin: 1, end: _bombsCount*_ticksPerChild),
-      duration: const Duration(milliseconds: _animationDurationMilliseconds),
-      builder: (context, child, value) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Column(
-            children: [
-              SizedBox(
-                height: _getPaddingForChild(1, value),
-              ),
-              const Bomb()
-            ]
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: _getPaddingForChild(2, value),
-              ),
-              const Bomb()
-            ]
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: _getPaddingForChild(3, value),
-              ),
-              const Bomb()
-            ]
-          ),
-        ],
-      ),
+    return SizedBox(
+      width: 150,
+      child: LoopAnimation<int>(
+        tween: IntTween(begin: 1, end: _bombsCount*_ticksPerChild),
+        duration: const Duration(milliseconds: _animationDurationMilliseconds),
+        builder: (context, child, value) => Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _getBombItem(1, value),
+            _getBombItem(2, value),
+            _getBombItem(3, value),
+          ],
+        ),
+      )
     );
   }
 
@@ -62,5 +45,17 @@ class BombLoader extends StatelessWidget {
 
   bool _tickForCurrentChild(int childNumber, int tick) {
     return tick >= (childNumber - 1)*_ticksPerChild + 1 && tick <= childNumber*_ticksPerChild;
+  }
+
+  Widget _getBombItem(int bombIndex, int animationValue) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: _getPaddingForChild(bombIndex, animationValue),
+        ),
+        const Bomb()
+      ]
+    );
   }
 }

@@ -33,6 +33,9 @@ class ScrollTrack extends StatelessWidget {
           key: _scrollTrackKey,
           height: double.infinity,
           decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(blurRadius: 4)
+            ],
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               width: _width,

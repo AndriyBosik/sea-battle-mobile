@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loaded_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
@@ -9,12 +10,15 @@ import 'package:sea_battle_presentation/presentation/component/user_score/user_s
 
 class HomeView extends StatelessWidget {
   final AbstractHomePageState _state;
+  final MenuClickListeners _menuClickListeners;
 
   const HomeView({
     Key? key,
     required AbstractHomePageState state,
+    required MenuClickListeners menuClickListeners
   }):
     _state = state,
+    _menuClickListeners = menuClickListeners,
     super(key: key);
 
   @override
@@ -36,7 +40,10 @@ class HomeView extends StatelessWidget {
     if (state is HomePageLoadingState) {
       return _getLoadingChild(state);
     }
-    return _getUserProfileChild(state as HomePageLoadedState);
+    if (state is HomePageLoadedState) {
+      return _getUserProfileChild(state);
+    }
+    return Container();
   }
 
   Widget _getLoadingChild(HomePageLoadingState state) {
@@ -66,9 +73,11 @@ class HomeView extends StatelessWidget {
             coins: state.userStats.coins,
           ),
         ),
-        const Positioned(
+        Positioned(
           bottom: 50,
-          child: Menu()
+          child: Menu(
+            menuClickListeners: _menuClickListeners
+          )
         )
       ],
     );

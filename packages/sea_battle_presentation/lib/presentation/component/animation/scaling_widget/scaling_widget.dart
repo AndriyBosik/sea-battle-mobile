@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class ScalingWidget extends StatelessWidget {
-  static const double _beginValue = 0.9;
-  static const double _endValue = 1.1;
-
+  final double _beginValue;
   final Widget _child;
+
+  double get _endValue => 2 - _beginValue;
 
   const ScalingWidget({
     Key? key,
+    required double beginValue,
     required Widget child
   }):
+    assert(beginValue < 1),
+    _beginValue = beginValue,
     _child = child,
     super(key: key);
   

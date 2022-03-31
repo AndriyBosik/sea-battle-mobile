@@ -8,4 +8,6 @@ abstract class UserService {
   Future<UserStats?> getUserStats({
     required String nickname
   });
+
+  Future<List<RatedUser>> getRatedUsers();
 }

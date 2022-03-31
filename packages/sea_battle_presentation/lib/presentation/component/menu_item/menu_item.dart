@@ -8,27 +8,33 @@ class MenuItem extends StatelessWidget {
   final String _itemName;
   final Widget _child;
   final HorizontalPosition _imagePosition;
+  final void Function()? _onClick;
 
   const MenuItem({
     Key? key,
     required String itemName,
     required Widget child,
-    HorizontalPosition imagePosition = HorizontalPosition.left
+    HorizontalPosition imagePosition = HorizontalPosition.left,
+    void Function()? onClick
   }):
     _itemName = itemName,
     _child = child,
     _imagePosition = imagePosition,
+    _onClick = onClick,
     super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Row(
-        children: _imagePosition == HorizontalPosition.left ? (
-          [_getChild(), _getText()]
-        ) : (
-          [_getText(), _getChild()]
+      child: GestureDetector(
+        onTap: _onClick,
+        child: Row(
+          children: _imagePosition == HorizontalPosition.left ? (
+            [_getChild(), _getText()]
+          ) : (
+            [_getText(), _getChild()]
+          ),
         ),
       ),
     );

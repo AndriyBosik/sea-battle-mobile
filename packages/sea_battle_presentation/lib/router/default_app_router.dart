@@ -4,6 +4,7 @@ import 'package:sea_battle_presentation/presentation/page/error/error_page.dart'
 import 'package:sea_battle_presentation/presentation/page/first_setup/first_setup_page.dart';
 import 'package:sea_battle_presentation/presentation/page/home/home_page.dart';
 import 'package:sea_battle_presentation/presentation/page/poster/poster_page.dart';
+import 'package:sea_battle_presentation/presentation/page/rating/rating_page.dart';
 import 'package:sea_battle_presentation/router/app_router.dart';
 
 class DefaultAppRouter implements AppRouter {
@@ -11,17 +12,20 @@ class DefaultAppRouter implements AppRouter {
   final FirstSetupPage _firstSetupPage;
   final HomePage _homePage;
   final ErrorPage _errorPage;
+  final RatingPage _ratingPage;
 
   DefaultAppRouter({
     required PosterPage posterPage,
     required FirstSetupPage firstSetupPage,
     required HomePage homePage,
-    required ErrorPage errorPage
+    required ErrorPage errorPage,
+    required RatingPage ratingPage
   }):
     _posterPage = posterPage,
     _firstSetupPage = firstSetupPage,
     _homePage = homePage,
-    _errorPage = errorPage;
+    _errorPage = errorPage,
+    _ratingPage = ratingPage;
 
   @override
   Route onGenerateRoute(RouteSettings settings) {
@@ -37,6 +41,10 @@ class DefaultAppRouter implements AppRouter {
       case AppRoute.home:
         return MaterialPageRoute(
           builder: (_) => _homePage
+        );
+      case AppRoute.rating:
+        return MaterialPageRoute(
+          builder: (_) => _ratingPage
         );
       default:
         return MaterialPageRoute(
