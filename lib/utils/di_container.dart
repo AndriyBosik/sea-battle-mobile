@@ -128,13 +128,16 @@ class DIContainer {
       userService: userService,
     );
 
+    const SettingsPage settingsPage = SettingsPage();
+
     /* AppRouter */
     final AppRouter appRouter = DefaultAppRouter(
       posterPage: posterPage,
       errorPage: errorPage,
       homePage: homePage,
       firstSetupPage: firstSetupPage,
-      ratingPage: ratingPage
+      ratingPage: ratingPage,
+      settingsPage: settingsPage
     );
 
     /* App */

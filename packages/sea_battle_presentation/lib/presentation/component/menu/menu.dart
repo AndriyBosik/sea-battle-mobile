@@ -42,16 +42,17 @@ class Menu extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            MenuItem(
+          children: [
+            const MenuItem(
               textKey: LocaleKey.shop,
               child: Shop(),
               imagePosition: HorizontalPosition.right,
             ),
             MenuItem(
               textKey: LocaleKey.settings,
-              child: Settings(),
+              child: const Settings(),
               imagePosition: HorizontalPosition.right,
+              onClick: _menuClickListeners.onSettingsClick,
             ),
           ],
         )

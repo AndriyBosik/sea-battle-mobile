@@ -71,7 +71,7 @@ class FirstSetupNicknameStepHandler implements FirstSetupStepHandler {
         )
       );
     } else {
-      await _appContextService.storeAppContext(_appContextMapper.firstSetupToAppContext(newFirstSetup)!);
+      await _appContextService.storeAppContext(_appContextMapper.firstSetupToAppContext(newFirstSetup));
       onNewState(FirstSetupPageCompletedState(
         firstSetup: currentState.firstSetup
       ));

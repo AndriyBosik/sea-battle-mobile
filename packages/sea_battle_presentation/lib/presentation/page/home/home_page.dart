@@ -46,7 +46,8 @@ class HomePage extends StatelessWidget {
               HomeView(
                 state: state,
                 menuClickListeners: MenuClickListeners(
-                  onRatingClick: () => Navigator.of(context).pushNamed(AppRoute.rating)
+                  onRatingClick: () => Navigator.of(context).pushNamed(AppRoute.rating),
+                  onSettingsClick: () => Navigator.of(context).pushNamed(AppRoute.settings)
                 ),
               )
             ],
