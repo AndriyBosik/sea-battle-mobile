@@ -11,6 +11,10 @@
     "nickname": "Nickname",
     "user": "User",
     "home": "Home",
+    "play": "Play",
+    "shop": "Shop",
+    "rating": "Rating",
+    "settings": "Settings",
 
     "emptyStringError": "{field} must not be empty",
     "existingError": "Such {dataType} already exists",

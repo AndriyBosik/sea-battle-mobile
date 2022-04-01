@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/meta/horizontal_position.dart';
+import 'package:sea_battle_presentation/meta/text_case.dart';
+import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 
 class MenuItem extends StatelessWidget {
-  final String _itemName;
+  final String _textKey;
   final Widget _child;
   final HorizontalPosition _imagePosition;
   final void Function()? _onClick;
 
   const MenuItem({
     Key? key,
-    required String itemName,
+    required String textKey,
     required Widget child,
     HorizontalPosition imagePosition = HorizontalPosition.left,
     void Function()? onClick
   }):
-    _itemName = itemName,
+    _textKey = textKey,
     _child = child,
     _imagePosition = imagePosition,
     _onClick = onClick,
@@ -51,8 +52,8 @@ class MenuItem extends StatelessWidget {
     ) : (
       const EdgeInsets.only(right: 10)
     ),
-    child: Text(
-      _itemName.toUpperCase(),
+    child: LocaleText(
+      textKey: _textKey,
       style: GoogleFonts.getFont(
         SeaBattleTheme.secondaryFont,
         fontSize: 30,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sea_battle_dto/sea_battle_dto.dart';
+import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/meta/horizontal_position.dart';
 import 'package:sea_battle_presentation/presentation/component/menu/play/play.dart';
 import 'package:sea_battle_presentation/presentation/component/menu/rating/rating.dart';
@@ -28,11 +29,11 @@ class Menu extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             const MenuItem(
-              itemName: "Play",
+              textKey: LocaleKey.play,
               child: Play()
             ),
             MenuItem(
-              itemName: "Rating",
+              textKey: LocaleKey.rating,
               child: const Rating(),
               onClick: _menuClickListeners.onRatingClick,
             ),
@@ -43,12 +44,12 @@ class Menu extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
             MenuItem(
-              itemName: "Shop",
+              textKey: LocaleKey.shop,
               child: Shop(),
               imagePosition: HorizontalPosition.right,
             ),
             MenuItem(
-              itemName: "Settings",
+              textKey: LocaleKey.settings,
               child: Settings(),
               imagePosition: HorizontalPosition.right,
             ),

@@ -11,6 +11,10 @@ class LocaleKey {
   static const String nickname = "nickname";
   static const String user = "user";
   static const String home = "home";
+  static const String play = "play";
+  static const String shop = "shop";
+  static const String rating = "rating";
+  static const String settings = "settings";
 
   static const String emptyStringError = "emptyStringError";
   static const String existingError = "existingError";

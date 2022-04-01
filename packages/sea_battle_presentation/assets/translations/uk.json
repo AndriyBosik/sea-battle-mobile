@@ -11,6 +11,10 @@
     "nickname": "Нікнейм",
     "user": "Користувач",
     "home": "Головна",
+    "play": "Грати",
+    "shop": "Магазин",
+    "rating": "Рейтинг",
+    "settings": "Налаштування",
 
     "emptyStringError": "{field} не повинне бути порожнім",
     "existingError": "Такий(-а) {dataType} уже існує",
