@@ -344,7 +344,7 @@ packages:
     source: path
     version: "0.0.1"
   sea_battle_common:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "packages/sea_battle_common"
       relative: true

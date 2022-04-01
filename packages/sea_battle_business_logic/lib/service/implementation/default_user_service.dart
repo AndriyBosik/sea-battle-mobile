@@ -1,30 +1,22 @@
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_business_logic/validator/abstraction/validator.dart';
-import 'package:sea_battle_common/model/page.dart';
 import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart';
-import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
 import 'package:sea_battle_model/sea_battle_model.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';
 
 class DefaultUserService implements UserService {
   final Validator<User> _userValidator;
-  final Mapper<User?, UserModel?> _userToUserModelMapper;
-  final Mapper<UserStatsModel?, UserStats?> _userStatsModelToUserStatsMapper;
-  final Mapper<RatedUserModel?, RatedUser?> _ratedUserModelToRatedUserMapper;
+  final UserMapper _userMapper;
   final UserRepository _userRepository;
 
   DefaultUserService({
     required Validator<User> userValidator,
-    required Mapper<User?, UserModel?> userToUserModelMapper,
-    required Mapper<UserStatsModel?, UserStats?> userStatsModelToUserStatsMapper,
-    required Mapper<RatedUserModel?, RatedUser?> ratedUserModelToRatedUserMapper,
+    required UserMapper userMapper,
     required UserRepository userRepository
   }):
     _userValidator = userValidator,
-    _userToUserModelMapper = userToUserModelMapper,
-    _userStatsModelToUserStatsMapper = userStatsModelToUserStatsMapper,
-    _ratedUserModelToRatedUserMapper = ratedUserModelToRatedUserMapper,
+    _userMapper = userMapper,
     _userRepository = userRepository;
   
   @override
@@ -39,7 +31,7 @@ class DefaultUserService implements UserService {
     }
     try {
       await _userRepository.createUser(
-        user: _userToUserModelMapper.map(user)!
+        user: _userMapper.fromDomainToModel(user)
       );
     } on Exception catch(exception) {
       return UnknownError(message: exception.toString());
@@ -49,9 +41,11 @@ class DefaultUserService implements UserService {
 
   @override
   Future<UserStats?> getUserStats({required String nickname}) async {
-    return _userStatsModelToUserStatsMapper.map(
-      await _userRepository.getUserStatsByNickname(nickname: nickname)
-    );
+    UserStatsModel? model = await _userRepository.getUserStatsByNickname(nickname: nickname);
+    if (model == null) {
+      return null;
+    }
+    return _userMapper.userStatsFromModelToDomain(model);
   }
 
   @override
@@ -61,8 +55,7 @@ class DefaultUserService implements UserService {
     return Page<RatedUser>(
       totalPages: page.totalPages,
       items: page.items
-          .map(_ratedUserModelToRatedUserMapper.map)
-          .map((item) => item!)
+          .map(_userMapper.ratedUserFromModelToDomain)
           .toList()
     );
   }

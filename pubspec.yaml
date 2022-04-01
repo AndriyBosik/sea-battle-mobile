@@ -38,6 +38,8 @@ dependencies:
     path: packages/sea_battle_business_logic
   sea_battle_presentation:
     path: packages/sea_battle_presentation
+  sea_battle_common:
+    path: packages/sea_battle_common
 
 dev_dependencies:
   flutter_test:

@@ -1,38 +1,31 @@
 import 'package:sea_battle_api/client/abstraction/user_client.dart';
-import 'package:sea_battle_common/model/page.dart';
 import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_entity/sea_battle_entity.dart';
-import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
 import 'package:sea_battle_model/model/rated_user_model.dart';
 import 'package:sea_battle_model/model/user_model.dart';
 import 'package:sea_battle_model/model/user_stats_model.dart';
 import 'package:sea_battle_repository/repository/abstraction/user_repository.dart';
 
 class DefaultUserRepository implements UserRepository {
-  final Mapper<UserEntity?, UserModel?> _userEntityToUserModelMapper;
-  final Mapper<UserModel?, UserEntity?> _userModelToUserEntityMapper;
-  final Mapper<UserStatsEntity?, UserStatsModel?> _userStatsEntityToUserStatsModelMapper;
-  final Mapper<RatedUserEntity?, RatedUserModel?> _ratedUserEntityToRatedUserModelMapper;
+  final UserMapper _userMapper;
   final UserClient _userClient;
 
   DefaultUserRepository({
-    required Mapper<UserEntity?, UserModel?> userEntityToUserModelMapper,
-    required Mapper<UserModel?, UserEntity?> userModelToUserEntityMapper,
-    required Mapper<UserStatsEntity?, UserStatsModel?> userStatsEntityToUserStatsModelMapper,
-    required Mapper<RatedUserEntity?, RatedUserModel?> ratedUserEntityToRatedUserModelMapper,
+    required UserMapper userMapper,
     required UserClient userClient
   }):
-    _userEntityToUserModelMapper = userEntityToUserModelMapper,
-    _userModelToUserEntityMapper = userModelToUserEntityMapper,
-    _userStatsEntityToUserStatsModelMapper = userStatsEntityToUserStatsModelMapper,
-    _ratedUserEntityToRatedUserModelMapper = ratedUserEntityToRatedUserModelMapper,
+    _userMapper = userMapper,
     _userClient = userClient;
 
   @override
   Future<UserModel?> getUserByNickname({
     required String nickname
   }) async {
-    return _userEntityToUserModelMapper.map(await _userClient.getUserByNickname(nickname));
+    UserEntity? entity = await _userClient.getUserByNickname(nickname);
+    if (entity == null) {
+      return null;
+    }
+    return _userMapper.fromEntityToModel(entity);
   }
 
   @override
@@ -40,13 +33,17 @@ class DefaultUserRepository implements UserRepository {
     required UserModel user
   }) async {
     await _userClient.createUser(
-      user: _userModelToUserEntityMapper.map(user)!
+      user: _userMapper.fromModelToEntity(user)
     );
   }
 
   @override
   Future<UserStatsModel?> getUserStatsByNickname({required String nickname}) async {
-    return _userStatsEntityToUserStatsModelMapper.map(await _userClient.getUserStatsByNickname(nickname));
+    UserStatsEntity? entity = await _userClient.getUserStatsByNickname(nickname);
+    if (entity == null) {
+      return null;
+    }
+    return _userMapper.userStatsFromEntityToModel(entity);
   }
 
   @override
@@ -55,8 +52,7 @@ class DefaultUserRepository implements UserRepository {
     return Page<RatedUserModel>(
       totalPages: page.totalPages,
       items: page.items
-          .map(_ratedUserEntityToRatedUserModelMapper.map)
-          .map((item) => item!)
+          .map(_userMapper.ratedUserFromEntityToModel)
           .toList()
     );
   }

@@ -15,8 +15,6 @@ dependencies:
     path: ../sea_battle_entity
   sea_battle_model:
     path: ../sea_battle_model
-  sea_battle_mapper:
-    path: ../sea_battle_mapper
   sea_battle_api:
     path: ../sea_battle_api
   sea_battle_local_storage:

@@ -3,13 +3,11 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:sea_battle_api/sea_battle_api.dart';
 import 'package:sea_battle_business_logic/sea_battle_business_logic.dart';
+import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_converter/sea_battle_converter.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart' as domain;
-import 'package:sea_battle_dto/dto/first_setup.dart';
 import 'package:sea_battle_entity/sea_battle_entity.dart';
 import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
-import 'package:sea_battle_mapper/sea_battle_mapper.dart';
-import 'package:sea_battle_model/sea_battle_model.dart';
 import 'package:sea_battle_presentation/sea_battle_presentation.dart';
 import 'package:sea_battle_presentation/presentation/app.dart';
 import 'package:sea_battle_repository/sea_battle_repository.dart';
@@ -35,23 +33,8 @@ class DIContainer {
     final String apiUrl = dotenv.env["API_URL"]!;
 
     /* Mappers */
-    final Mapper<AppContextEntity?, AppContextModel?> appContextEntityToAppContextModelMapper =
-      AppContextEntityToAppContextModelMapper();
-    final Mapper<AppContextModel?, AppContextEntity?> appContextModelToAppContextEntityMapper =
-      AppContextModelToAppContextEntityMapper();
-    final Mapper<AppContextModel?, domain.AppContext?> appContextModelToAppContextMapper =
-      AppContextModelToAppContextMapper();
-    final Mapper<domain.AppContext?, AppContextModel?> appContextToAppContextModelMapper =
-      AppContextToAppContextModelMapper();
-    final Mapper<FirstSetup?, domain.AppContext?> firstSetupToAppContextMapper = FirstSetupToAppContextMapper();
-    final Mapper<RatedUserEntity?, RatedUserModel?> ratedUserEntityToRatedUserModelMapper = RatedUserEntityToRatedUserModelMapper();
-    final Mapper<RatedUserModel?, domain.RatedUser?> ratedUserModelToRatedUserMapper = RatedUserModelToRatedUserMapper();
-    final Mapper<UserEntity?, UserModel?> userEntityToUserModelMapper = UserEntityToUserModelMapper();
-    final Mapper<UserModel?, UserEntity?> userModelToUserEntityMapper = UserModelToUserEntityMapper();
-    final Mapper<UserModel?, domain.User?> userModelToUserMapper = UserModelToUserMapper();
-    final Mapper<UserStatsEntity?, UserStatsModel?> userStatsEntityToUserModelMapper = UserStatsEntityToUserStatsModelMapper();
-    final Mapper<UserStatsModel?, domain.UserStats?> userStatsModelToUserStatsMapper = UserStatsModelToUserStatsMapper();
-    final Mapper<domain.User?, UserModel?> userToUserModelMapper = UserToUserModelMapper();
+    UserMapper userMapper = DefaultUserMapper();
+    AppContextMapper appContextMapper = DefaultAppContextMapper();
     
     /* httpClient */
     final httpClient = http.Client();
@@ -80,15 +63,11 @@ class DIContainer {
 
     /* Repositories */
     final UserRepository userRepository = DefaultUserRepository(
-      userEntityToUserModelMapper: userEntityToUserModelMapper,
-      userModelToUserEntityMapper: userModelToUserEntityMapper,
-      userStatsEntityToUserStatsModelMapper: userStatsEntityToUserModelMapper,
-      ratedUserEntityToRatedUserModelMapper: ratedUserEntityToRatedUserModelMapper,
+      userMapper: userMapper,
       userClient: userClient);
     final AppContextRepository appContextRepository = DefaultAppContextRepository(
       appContext: appContext,
-      modelToEntityMapper: appContextModelToAppContextEntityMapper,
-      entityToModelMapper: appContextEntityToAppContextModelMapper);
+      appContextMapper: appContextMapper);
     
     /* Validators */
     final Validator<domain.User> userValidator = UserValidator();
@@ -96,14 +75,11 @@ class DIContainer {
     /* Services */
     final UserService userService = DefaultUserService(
       userValidator: userValidator,
-      userToUserModelMapper: userToUserModelMapper,
-      userStatsModelToUserStatsMapper: userStatsModelToUserStatsMapper,
-      ratedUserModelToRatedUserMapper: ratedUserModelToRatedUserMapper,
+      userMapper: userMapper,
       userRepository: userRepository);
     final AppContextService appContextService = DefaultAppContextService(
       appContextRepository: appContextRepository,
-      modelMapper: appContextModelToAppContextMapper,
-      toModelMapper: appContextToAppContextModelMapper);
+      appContextMapper: appContextMapper);
 
     /* Builders */
     ProgressStagesBuilder progressStagesBuilder = DefaultProgressStagesBuilder();
@@ -124,7 +100,7 @@ class DIContainer {
         userService: userService,
         appContextService: appContextService,
         firstSetupCopier: firstSetupCopier,
-        mapper: firstSetupToAppContextMapper,
+        appContextMapper: appContextMapper,
         errorLocalizers: [
           emptyStringErrorLocalizer,
           existingErrorLocalizer,
@@ -179,9 +155,6 @@ class DIContainer {
       Converter<Map<String, dynamic>, UserEntity>: userJsonConverter,
       UserClient: userClient,
       AppContext: appContext,
-      Mapper<UserEntity?, UserModel?>: userEntityToUserModelMapper,
-      Mapper<UserModel?, UserEntity?>: userModelToUserEntityMapper,
-      Mapper<UserModel?, domain.User?>: userModelToUserMapper,
       UserRepository: userRepository,
       UserService: userService,
       FirstSetupPage: firstSetupPage,

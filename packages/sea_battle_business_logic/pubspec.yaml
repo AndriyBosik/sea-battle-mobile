@@ -15,8 +15,6 @@ dependencies:
     path: ../sea_battle_domain
   sea_battle_model:
     path: ../sea_battle_model
-  sea_battle_mapper:
-    path: ../sea_battle_mapper
   sea_battle_repository:
     path: ../sea_battle_repository
   sea_battle_common:

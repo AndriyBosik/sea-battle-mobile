@@ -17,8 +17,6 @@ dependencies:
     path: ../sea_battle_domain
   sea_battle_dto:
     path: ../sea_battle_dto
-  sea_battle_mapper:
-    path: ../sea_battle_mapper
   sea_battle_repository:
     path: ../sea_battle_repository
   sea_battle_business_logic:
