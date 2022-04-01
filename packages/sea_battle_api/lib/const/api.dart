@@ -17,7 +17,7 @@ extension _ApiPath on Api {
       case Api.getUserStats:
         return "/api/users/{nickname}/stats";
       case Api.getRatedUsers:
-        return "/api/users/rated";
+        return "/api/users/rated?pageNumber={pageNumber}&size={size}";
     }
   }
 }

@@ -8,7 +8,6 @@ import 'package:sea_battle_presentation/controller/cubit/base_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/abstract_home_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loaded_state.dart';
 import 'package:sea_battle_presentation/controller/state/home_page/home_page_loading_state.dart';
-import 'package:sea_battle_presentation/controller/state/home_page/home_page_rating_clicked_state.dart';
 import 'package:sea_battle_presentation/logic/abstraction/progress_stages_builder.dart';
 
 class HomePageCubit extends BaseCubit<AbstractHomePageState> {
@@ -51,10 +50,6 @@ class HomePageCubit extends BaseCubit<AbstractHomePageState> {
         },
         onPercentageChanged: _onPercentageChanged
       );
-  }
-
-  void onRatingButtonClick() {
-    emitIfOpened(HomePageRatingClickedState());
   }
 
   void _onPercentageChanged(int currentProgress, String description) {

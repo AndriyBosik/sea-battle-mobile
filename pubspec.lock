@@ -343,6 +343,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  sea_battle_common:
+    dependency: transitive
+    description:
+      path: "packages/sea_battle_common"
+      relative: true
+    source: path
+    version: "0.0.1"
   sea_battle_converter:
     dependency: "direct main"
     description:

@@ -23,6 +23,8 @@ dependencies:
     path: ../sea_battle_repository
   sea_battle_business_logic:
     path: ../sea_battle_business_logic
+  sea_battle_common:
+    path: ../sea_battle_common
   google_fonts: ^2.3.1
   simple_animations: ^4.0.1
   flutter_bloc: ^8.0.1

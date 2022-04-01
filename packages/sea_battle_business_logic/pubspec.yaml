@@ -19,6 +19,8 @@ dependencies:
     path: ../sea_battle_mapper
   sea_battle_repository:
     path: ../sea_battle_repository
+  sea_battle_common:
+    path: ../sea_battle_common
 
 dev_dependencies:
   flutter_test:

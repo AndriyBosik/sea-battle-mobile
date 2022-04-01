@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_dto/dto/scroll_bar_context.dart';
-import 'package:sea_battle_dto/dto/widget_constraints.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/utils/math_utils.dart';
 import 'package:sea_battle_presentation/utils/widget_utils.dart';
 
@@ -14,15 +13,18 @@ class ScrollBoxUtils {
     return trackPosition;
   }
 
-  static double calculateTrackPositionOnNotification({
+  static double calculateTrackPositionByExtents({
     required GlobalKey scrollTrackWidgetKey,
     required GlobalKey trackWidgetKey,
-    required ScrollNotification notification
+    required ScrollExtentContext extentContext
   }) {
+    if (extentContext.maxExtent == 0) {
+      return 0;
+    }
     final WidgetConstraints scrollTrackConstraints = WidgetUtils.getWidgetConstraints(scrollTrackWidgetKey);
     final WidgetConstraints trackConstraints = WidgetUtils.getWidgetConstraints(trackWidgetKey);
     final double maxHeight = scrollTrackConstraints.size.height;
-    final scrollTrackPosition = maxHeight*notification.metrics.extentBefore/notification.metrics.maxScrollExtent;
+    final scrollTrackPosition = maxHeight*extentContext.currentExtent/extentContext.maxExtent;
     return ScrollBoxUtils.fixTrackPosition(scrollTrackPosition, maxHeight) - trackConstraints.size.height / 2;
   }
 

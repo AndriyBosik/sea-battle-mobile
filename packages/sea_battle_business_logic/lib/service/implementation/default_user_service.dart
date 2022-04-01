@@ -1,5 +1,7 @@
 import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
 import 'package:sea_battle_business_logic/validator/abstraction/validator.dart';
+import 'package:sea_battle_common/model/page.dart';
+import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart';
 import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
 import 'package:sea_battle_model/sea_battle_model.dart';
@@ -53,10 +55,15 @@ class DefaultUserService implements UserService {
   }
 
   @override
-  Future<List<RatedUser>> getRatedUsers() async {
-    return (await _userRepository.getRatedUsers())
-      .map(_ratedUserModelToRatedUserMapper.map)
-      .map((item) => item!)
-      .toList();
+  Future<Page<RatedUser>> getRatedUsers(PageRequest pageRequest) async {
+    Page<RatedUserModel> page = await _userRepository.getRatedUsers(pageRequest);
+
+    return Page<RatedUser>(
+      totalPages: page.totalPages,
+      items: page.items
+          .map(_ratedUserModelToRatedUserMapper.map)
+          .map((item) => item!)
+          .toList()
+    );
   }
 }

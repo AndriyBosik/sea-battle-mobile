@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:sea_battle_api/client/abstraction/user_client.dart';
 import 'package:sea_battle_api/const/api.dart';
 import 'package:sea_battle_api/exception/user_request_failure.dart';
+import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_converter/converter/abstraction/converter.dart';
 import 'package:sea_battle_entity/sea_battle_entity.dart';
 
@@ -71,19 +72,33 @@ class DefaultUserClient implements UserClient {
   }
 
   @override
-  Future<List<RatedUserEntity>> getRatedUsers() async {
-    final Uri url = Uri.parse(Api.getRatedUsers.withBaseUrl(_apiUrl));
+  Future<Page<RatedUserEntity>> getRatedUsers(PageRequest pageRequest) async {
+    final Uri url = Uri.parse(Api.getRatedUsers.withBaseUrl(_apiUrl, {
+      "pageNumber": pageRequest.pageNumber,
+      "size": pageRequest.size
+    }));
     
     final http.Response response = await _httpClient.get(url);
     if (response.statusCode != 200) {
       throw UserRequestFailure();
     }
 
-    final List<dynamic>? json = convert.jsonDecode(convert.utf8.decode(response.bodyBytes)) as List<dynamic>;
+    final Map<String, dynamic>? json = convert.jsonDecode(convert.utf8.decode(response.bodyBytes)) as Map<String, dynamic>?;
     if (json == null) {
-      return [];
+      return const Page(
+        totalPages: 0,
+        items: []
+      );
     }
-    return json
+
+    return Page(
+      totalPages: json["totalPages"] as int,
+      items: _getItemsFromJson(json["items"] as List<dynamic>)
+    );
+  }
+
+  List<RatedUserEntity> _getItemsFromJson(List<dynamic> jsonItems) {
+    return jsonItems
       .map((item) => item as Map<String, dynamic>)
       .map((item) => _ratedUserJsonConverter.deserialize(item))
       .where((item) => item != null)

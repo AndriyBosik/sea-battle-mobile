@@ -21,6 +21,8 @@ dependencies:
     path: ../sea_battle_api
   sea_battle_local_storage:
     path: ../sea_battle_local_storage
+  sea_battle_common:
+    path: ../sea_battle_common
 
 dev_dependencies:
   flutter_test:

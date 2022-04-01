@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sea_battle_dto/dto/scroll_bar_context.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_scroll_box/scroll_list/scroll_list.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_scroll_box/scroll_track/scroll_track.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_scroll_box/track/track.dart';
@@ -7,12 +7,15 @@ import 'package:sea_battle_presentation/utils/scroll_box_utils.dart';
 
 class BombScrollBox extends StatefulWidget {
   final List<Widget> _children;
+  final void Function()? _onLastItemScrolled;
 
   const BombScrollBox({
     Key? key,
-    required List<Widget> children
+    required List<Widget> children,
+    void Function()? onLastItemScrolled
   }):
     _children = children,
+    _onLastItemScrolled = onLastItemScrolled,
     super(key: key);
 
   @override
@@ -27,17 +30,8 @@ class _BombScrollBoxState extends State<BombScrollBox> {
   final GlobalKey _scrollTrackWidgetKey = GlobalKey();
   final GlobalKey _trackWidgetKey = GlobalKey();
   double _trackPosition = 0;
-  bool isScrollVisible = false;
+  bool _isNotifiedAboutLastItemScrolled = false;
   final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!
-        .addPostFrameCallback((_) => setState(() {
-          isScrollVisible = ScrollBoxUtils.isScrollTrackNeeded(_scrollController);
-        }));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +50,6 @@ class _BombScrollBoxState extends State<BombScrollBox> {
       maxHeight: maxHeight,
       scrollController: _scrollController,
       children: widget._children);
-    if (!isScrollVisible) {
-      return [scrollList];
-    }
     return [
       scrollList,
       ScrollTrack(
@@ -82,24 +73,60 @@ class _BombScrollBoxState extends State<BombScrollBox> {
 
   void _onVerticalDragUpdate(DragUpdateDetails dragUpdateDetails) {
     setState(() {
+      final double maxExtent = _scrollController.position.maxScrollExtent;
       final ScrollBarContext scrollBarContext = ScrollBoxUtils.calculateTrackPositionOnDrag(
         scrollTrackWidgetKey: _scrollTrackWidgetKey,
         trackWidgetKey: _trackWidgetKey,
         dragUpdateDetails: dragUpdateDetails,
-        scrollHeight: _scrollController.position.maxScrollExtent);
+        scrollHeight: maxExtent);
+      final double currentExtent = scrollBarContext.scrollControllerValue;
       _trackPosition = scrollBarContext.trackPosition + _scrollTrackPadding;
       _scrollController.jumpTo(scrollBarContext.scrollControllerValue);
+
+      if (currentExtent < maxExtent) {
+        _isNotifiedAboutLastItemScrolled = false;
+      }
     });
   }
 
-  bool _onScrollNotification(ScrollNotification notification) {
+  bool _onScrollNotification(ScrollNotification? notification) {
+    final ScrollExtentContext extentContext = _getScrollExtentContext(notification);
+    _callLastItemScrolledCallback(extentContext: extentContext);
     setState(() {
-      _trackPosition = _scrollTrackPadding + ScrollBoxUtils.calculateTrackPositionOnNotification(
+      _trackPosition = _scrollTrackPadding + ScrollBoxUtils.calculateTrackPositionByExtents(
         scrollTrackWidgetKey: _scrollTrackWidgetKey,
         trackWidgetKey: _trackWidgetKey,
-        notification: notification
+        extentContext: extentContext
       );
+      _isNotifiedAboutLastItemScrolled = _refreshNotifiedFlagValue(extentContext: extentContext);
     });
     return true;
+  }
+
+  void _callLastItemScrolledCallback({
+      required ScrollExtentContext extentContext
+  }) {
+    if (extentContext.currentExtent > extentContext.maxExtent && !_isNotifiedAboutLastItemScrolled && widget._onLastItemScrolled != null) {
+      widget._onLastItemScrolled!();
+    }
+  }
+
+  bool _refreshNotifiedFlagValue({
+      required ScrollExtentContext extentContext
+  }) {
+    return extentContext.currentExtent > extentContext.maxExtent;
+  }
+
+  ScrollExtentContext _getScrollExtentContext(ScrollNotification? notification) {
+    if (notification == null) {
+      return ScrollExtentContext(
+        currentExtent: _scrollController.position.extentBefore,
+        maxExtent: _scrollController.position.maxScrollExtent
+      );
+    }
+    return ScrollExtentContext(
+      currentExtent: notification.metrics.extentBefore,
+      maxExtent: notification.metrics.maxScrollExtent
+    );
   }
 }

@@ -1,4 +1,5 @@
-import 'package:sea_battle_model/model/user_model.dart';
+import 'package:sea_battle_common/model/page.dart';
+import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_model/sea_battle_model.dart';
 
 abstract class UserRepository {
@@ -14,5 +15,5 @@ abstract class UserRepository {
     required String nickname
   });
 
-  Future<List<RatedUserModel>> getRatedUsers();
+  Future<Page<RatedUserModel>> getRatedUsers(PageRequest pageRequest);
 }

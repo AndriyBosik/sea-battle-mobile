@@ -1,4 +1,6 @@
 import 'package:sea_battle_api/client/abstraction/user_client.dart';
+import 'package:sea_battle_common/model/page.dart';
+import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_entity/sea_battle_entity.dart';
 import 'package:sea_battle_mapper/mapper/abstraction/mapper.dart';
 import 'package:sea_battle_model/model/rated_user_model.dart';
@@ -48,10 +50,14 @@ class DefaultUserRepository implements UserRepository {
   }
 
   @override
-  Future<List<RatedUserModel>> getRatedUsers() async {
-    return (await _userClient.getRatedUsers())
-      .map(_ratedUserEntityToRatedUserModelMapper.map)
-      .map((item) => item!)
-      .toList();
+  Future<Page<RatedUserModel>> getRatedUsers(PageRequest pageRequest) async {
+    Page<RatedUserEntity> page = await _userClient.getRatedUsers(pageRequest);
+    return Page<RatedUserModel>(
+      totalPages: page.totalPages,
+      items: page.items
+          .map(_ratedUserEntityToRatedUserModelMapper.map)
+          .map((item) => item!)
+          .toList()
+    );
   }
 }
