@@ -8,10 +8,11 @@ import 'package:sea_battle_presentation/controller/state/first_setup_page/first_
 import 'package:sea_battle_presentation/controller/state/first_setup_page/first_setup_page_nickname_step_user_creating_state.dart';
 import 'package:sea_battle_presentation/handler/abstraction/first_setup_step_handler.dart';
 import 'package:sea_battle_presentation/presentation/component/background/background.dart';
+import 'package:sea_battle_presentation/presentation/page/page_widget.dart';
 import 'package:sea_battle_presentation/presentation/view/first_setup/first_setup_view.dart';
 import 'package:sea_battle_presentation/utils/locale_utils.dart';
 
-class FirstSetupPage extends StatelessWidget {
+class FirstSetupPage extends PageWidget<FirstSetupPageCubit> {
   final List<FirstSetupStepHandler> _stepHandlers;
 
   const FirstSetupPage({
@@ -20,34 +21,28 @@ class FirstSetupPage extends StatelessWidget {
   }):
     _stepHandlers = stepHandlers,
     super(key: key);
+  @override
+  FirstSetupPageCubit createCubit() {
+    return FirstSetupPageCubit(
+      stepHandlers: _stepHandlers,
+      defaultLanguage: LocaleUtils.currentLocale.languageCode
+    );
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider<FirstSetupPageCubit>(
-      create: (_) => FirstSetupPageCubit(
-        stepHandlers: _stepHandlers
-      )..initContext(LocaleUtils.currentLocale.languageCode),
-      child: BlocConsumer<FirstSetupPageCubit, AbstractFirstSetupPageState>(
+  List<Widget> getContent(BuildContext context) {
+    return [
+      BlocConsumer<FirstSetupPageCubit, AbstractFirstSetupPageState>(
         listener: (context, state) {
           if (state is FirstSetupPageNicknameStepUserCreatingState) {
             FocusManager.instance.primaryFocus?.unfocus();
           }
           if (state is FirstSetupPageCompletedState) {
-            Navigator.of(context).pushNamed(AppRoute.home);
+            Navigator.of(context).pushNamed(AppRoute.home.name());
           }
         },
-        builder: (context, state) => Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Stack(
-            children: [
-              const Background(
-                imageName: AppAsset.backgroundImage,
-              ),
-              FirstSetupView(state: state)
-            ],
-          ),
-        )
+        builder: (context, state) => FirstSetupView(state: state)
       )
-    );
+    ];
   }
 }

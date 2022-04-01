@@ -5,9 +5,10 @@ import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/controller/cubit/rating_page_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/rating_page/abstract_rating_page_state.dart';
 import 'package:sea_battle_presentation/presentation/component/background/background.dart';
+import 'package:sea_battle_presentation/presentation/page/page_widget.dart';
 import 'package:sea_battle_presentation/presentation/view/rating/rating_view.dart';
 
-class RatingPage extends StatelessWidget {
+class RatingPage extends PageWidget<RatingPageCubit> {
   final UserService _userService;
 
   const RatingPage({
@@ -40,5 +41,22 @@ class RatingPage extends StatelessWidget {
         },
       )
     );
+  }
+
+  @override
+  RatingPageCubit createCubit() {
+    return RatingPageCubit(
+      userService: _userService);
+  }
+
+  @override
+  List<Widget> getContent(BuildContext context) {
+    return [
+      BlocBuilder<RatingPageCubit, AbstractRatingPageState>(
+        builder: (context, state) => RatingView(
+          state: state
+        ),
+      )
+    ];
   }
 }

@@ -8,6 +8,7 @@ import 'package:sea_battle_converter/sea_battle_converter.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart' as domain;
 import 'package:sea_battle_entity/sea_battle_entity.dart';
 import 'package:sea_battle_local_storage/sea_battle_local_storage.dart';
+import 'package:sea_battle_presentation/const/app_route.dart';
 import 'package:sea_battle_presentation/sea_battle_presentation.dart';
 import 'package:sea_battle_presentation/presentation/app.dart';
 import 'package:sea_battle_repository/sea_battle_repository.dart';
@@ -132,12 +133,14 @@ class DIContainer {
 
     /* AppRouter */
     final AppRouter appRouter = DefaultAppRouter(
-      posterPage: posterPage,
-      errorPage: errorPage,
-      homePage: homePage,
-      firstSetupPage: firstSetupPage,
-      ratingPage: ratingPage,
-      settingsPage: settingsPage
+      defaultPage: errorPage,
+      pages: {
+        AppRoute.firstSetup: firstSetupPage,
+        AppRoute.home: homePage,
+        AppRoute.poster: posterPage,
+        AppRoute.rating: ratingPage,
+        AppRoute.settings: settingsPage,
+      }
     );
 
     /* App */

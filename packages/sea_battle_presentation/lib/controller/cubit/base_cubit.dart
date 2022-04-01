@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BaseCubit<T> extends Cubit<T> {
+abstract class BaseCubit<T> extends Cubit<T> {
   BaseCubit(T state): super(state);
 
   @protected
@@ -11,4 +11,6 @@ class BaseCubit<T> extends Cubit<T> {
     }
     emit(state);
   }
+
+  void onCreate() {}
 }

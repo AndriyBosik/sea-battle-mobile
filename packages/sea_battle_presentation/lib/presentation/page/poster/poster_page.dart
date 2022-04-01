@@ -6,9 +6,10 @@ import 'package:sea_battle_presentation/controller/cubit/poster_page_cubit.dart'
 import 'package:sea_battle_presentation/controller/state/poster_page/abstract_poster_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/poster_page/poster_page_context_found_state.dart';
 import 'package:sea_battle_presentation/controller/state/poster_page/poster_page_context_not_found_state.dart';
+import 'package:sea_battle_presentation/presentation/page/page_widget.dart';
 import 'package:sea_battle_presentation/presentation/view/poster/poster_view.dart';
 
-class PosterPage extends StatelessWidget {
+class PosterPage extends PageWidget<PosterPageCubit> {
   final AppContextService _appContextService;
 
   const PosterPage({
@@ -16,27 +17,30 @@ class PosterPage extends StatelessWidget {
     required AppContextService appContextService
   }):
     _appContextService = appContextService,
-    super(key: key);
+    super(
+      key: key,
+      backgroundImage: null
+    );
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider<PosterPageCubit>(
-      create: (context) => PosterPageCubit(
-        appContextService: _appContextService
-      )..start(),
-      child: BlocConsumer<PosterPageCubit, AbstractPosterPageState>(
+  PosterPageCubit createCubit() {
+    return PosterPageCubit(
+      appContextService: _appContextService);
+  }
+
+  @override
+  List<Widget> getContent(BuildContext context) {
+    return [
+      BlocConsumer<PosterPageCubit, AbstractPosterPageState>(
         listener: (context, state) {
           if (state is PosterPageContextFoundState) {
-            Navigator.of(context).pushReplacementNamed(AppRoute.home);
+            Navigator.of(context).pushReplacementNamed(AppRoute.home.name());
           } else if (state is PosterPageContextNotFoundState) {
-            Navigator.of(context).pushReplacementNamed(AppRoute.firstSetup);
+            Navigator.of(context).pushReplacementNamed(AppRoute.firstSetup.name());
           }
         },
-        builder: (context, state) => const Scaffold(
-          backgroundColor: Colors.transparent,
-          body: PosterView(),
-        )
+        builder: (context, state) => const PosterView(),
       )
-    );
+    ];
   }
 }

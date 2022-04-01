@@ -17,6 +17,12 @@ class RatingPageCubit extends BaseCubit<AbstractRatingPageState> {
     _userService = userService,
     super(RatingPageInitialState());
 
+  @override
+  void onCreate() {
+    super.onCreate();
+    loadRating();
+  }
+
   Future<void> loadRating() async {
     RatingPageUsersState preLoadingState = RatingPageUsersState(
       currentPage: -1,

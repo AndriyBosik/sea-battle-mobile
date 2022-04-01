@@ -1,25 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sea_battle_dto/dto/first_setup.dart';
+import 'package:sea_battle_presentation/controller/cubit/base_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/first_setup_page/abstract_first_setup_page_state.dart';
 import 'package:sea_battle_presentation/controller/state/first_setup_page/first_setup_page_language_step_state.dart';
 import 'package:sea_battle_presentation/controller/state/first_setup_page/first_setup_page_nickname_step_state.dart';
 import 'package:sea_battle_presentation/handler/abstraction/first_setup_step_handler.dart';
 
-class FirstSetupPageCubit extends Cubit<AbstractFirstSetupPageState> {
+class FirstSetupPageCubit extends BaseCubit<AbstractFirstSetupPageState> {
   final List<FirstSetupStepHandler> _stepHandlers;
+  final String _defaultLanguage;
   
   FirstSetupPageCubit({
-    required List<FirstSetupStepHandler> stepHandlers
+    required List<FirstSetupStepHandler> stepHandlers,
+    required String defaultLanguage
   }):
     _stepHandlers = stepHandlers,
+    _defaultLanguage = defaultLanguage,
     super(FirstSetupPageLanguageStepState(
       firstSetup: FirstSetup()
     ));
   
-  void initContext(String defalutLanguage) {
+  @override
+  void onCreate() {
+    super.onCreate();
     emit(
       FirstSetupPageLanguageStepState(
-        firstSetup: FirstSetup(language: defalutLanguage)
+        firstSetup: FirstSetup(language: _defaultLanguage)
       )
     );
   }

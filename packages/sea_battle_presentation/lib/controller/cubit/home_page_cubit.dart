@@ -28,6 +28,12 @@ class HomePageCubit extends BaseCubit<AbstractHomePageState> {
       stageDescription: ""
     ));
   
+  @override
+  void onCreate() {
+    super.onCreate();
+    loadUserData();
+  }
+  
   Future<void> loadUserData() async {
     UserStats? stats;
 

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_presentation/presentation/page/default_page_widget.dart';
 
-class ErrorPage extends StatelessWidget {
+class ErrorPage extends DefaultPageWidget {
   const ErrorPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const Text(
-      "Error",
-      style: TextStyle(
-        fontSize: 70
-      ),
-    );
+  List<Widget> getContent(BuildContext context) {
+    return const [
+      Text(
+        "Error",
+        style: TextStyle(
+          fontSize: 70
+        ),
+      )
+    ];
   }
 }
