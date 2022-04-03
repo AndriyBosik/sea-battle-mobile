@@ -1,5 +1,4 @@
-import 'package:sea_battle_business_logic/service/abstraction/user_service.dart';
-import 'package:sea_battle_business_logic/validator/abstraction/validator.dart';
+import 'package:sea_battle_business_logic/sea_battle_business_logic.dart';
 import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart';
 import 'package:sea_battle_model/sea_battle_model.dart';
@@ -7,15 +6,18 @@ import 'package:sea_battle_repository/repository/abstraction/user_repository.dar
 
 class DefaultUserService implements UserService {
   final Validator<User> _userValidator;
+  final Validator<Nickname> _nickanmeValidator;
   final UserMapper _userMapper;
   final UserRepository _userRepository;
 
   DefaultUserService({
     required Validator<User> userValidator,
+    required Validator<Nickname> nicknameValidator,
     required UserMapper userMapper,
     required UserRepository userRepository
   }):
     _userValidator = userValidator,
+    _nickanmeValidator = nicknameValidator,
     _userMapper = userMapper,
     _userRepository = userRepository;
   
@@ -58,5 +60,31 @@ class DefaultUserService implements UserService {
           .map(_userMapper.ratedUserFromModelToDomain)
           .toList()
     );
+  }
+
+  @override
+  Future<AbstractError?> updateNickname({
+    required String oldNickname,
+    required String newNickname
+  }) async {
+    AbstractError? error = _nickanmeValidator.validate(Nickname(
+      value: newNickname
+    ));
+    await Future.delayed(const Duration(seconds: 2));
+    if (error != null) {
+      return error;
+    }
+    if (await _userRepository.getUserByNickname(nickname: newNickname) != null) {
+      return ExistingError(dataType: "user");
+    }
+    try {
+      await _userRepository.updateNickname(
+        oldNickname: oldNickname,
+        newNickname: newNickname
+      );
+    } on Exception catch(exception) {
+      return UnknownError(message: exception.toString());
+    }
+    return null;
   }
 }

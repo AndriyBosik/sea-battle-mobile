@@ -15,6 +15,10 @@
     "shop": "Shop",
     "rating": "Rating",
     "settings": "Settings",
+    "language": "Language",
+    "music": "Music",
+    "save": "Save",
+    "ok": "Ok",
 
     "emptyStringError": "{field} must not be empty",
     "existingError": "Such {dataType} already exists",

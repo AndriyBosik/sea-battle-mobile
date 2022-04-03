@@ -1,0 +1,4 @@
+enum PopupStatus {
+  show,
+  hide
+}

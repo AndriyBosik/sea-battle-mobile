@@ -5,6 +5,7 @@ enum Api {
   getUser,
   getUserStats,
   getRatedUsers,
+  updateNickname
 }
 
 extension _ApiPath on Api {
@@ -18,6 +19,8 @@ extension _ApiPath on Api {
         return "/api/users/{nickname}/stats";
       case Api.getRatedUsers:
         return "/api/users/rated?pageNumber={pageNumber}&size={size}";
+      case Api.updateNickname:
+        return "/api/users/username";
     }
   }
 }

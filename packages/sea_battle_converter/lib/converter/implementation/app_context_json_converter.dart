@@ -9,7 +9,8 @@ class AppContextJsonConverter implements JsonConverter<AppContextEntity> {
       return null;
     }
     return AppContextEntity(
-      nickname: object["nickname"]
+      nickname: object["nickname"] as String? ?? "",
+      isMusicOn: object["isMusicOn"] as bool? ?? true
     );
   }
 
@@ -19,7 +20,8 @@ class AppContextJsonConverter implements JsonConverter<AppContextEntity> {
       return null;
     }
     return {
-      "nickname": object.nickname
+      "nickname": object.nickname,
+      "isMusicOn": object.isMusicOn,
     };
   }
 

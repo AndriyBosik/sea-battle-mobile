@@ -71,13 +71,7 @@ class FirstSetupView extends StatelessWidget {
 
   Widget _mapStateToStep(FirstSetupPageCubit cubit) {
     if (_state is FirstSetupPageLanguageStepState) {
-      return LanguageStep(
-        selectedLanguage: _state.firstSetup.language,
-        onLanguageTap: (languageCode) {
-          LocaleUtils.changeLocale(Locale(languageCode));
-          cubit.changeLanguage(languageCode);
-        }
-      );
+      return const LanguageStep();
     }
     if (_state is FirstSetupPageNicknameStepState) {
       String? error = (_state as FirstSetupPageNicknameStepState).errorMessage;

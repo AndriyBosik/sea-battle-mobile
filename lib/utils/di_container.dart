@@ -71,11 +71,15 @@ class DIContainer {
       appContextMapper: appContextMapper);
     
     /* Validators */
-    final Validator<domain.User> userValidator = UserValidator();
+    final Validator<domain.Nickname> nicknameValidator = NicknameValidator();
+    final Validator<domain.User> userValidator = UserValidator(
+      nicknameValidator: nicknameValidator
+    );
     
     /* Services */
     final UserService userService = DefaultUserService(
       userValidator: userValidator,
+      nicknameValidator: nicknameValidator,
       userMapper: userMapper,
       userRepository: userRepository);
     final AppContextService appContextService = DefaultAppContextService(
@@ -95,6 +99,14 @@ class DIContainer {
     ErrorLocalizer<domain.UnknownError> unknownErrorLocalizer = UnknownErrorLocalizer();
 
     /* Handlers */
+    ErrorHandler errorHandler = DefaultErrorHandler(
+      errorLocalizers: [
+        emptyStringErrorLocalizer,
+        existingErrorLocalizer,
+        shortStringErrorLocalizer,
+        unknownErrorLocalizer
+      ]
+    );
     List<FirstSetupStepHandler> stepHandlers = [
       FirstSetupLanguageStepHandler(),
       FirstSetupNicknameStepHandler(
@@ -102,12 +114,7 @@ class DIContainer {
         appContextService: appContextService,
         firstSetupCopier: firstSetupCopier,
         appContextMapper: appContextMapper,
-        errorLocalizers: [
-          emptyStringErrorLocalizer,
-          existingErrorLocalizer,
-          shortStringErrorLocalizer,
-          unknownErrorLocalizer
-        ]
+        errorHandler: errorHandler
       )
     ];
 
@@ -129,7 +136,11 @@ class DIContainer {
       userService: userService,
     );
 
-    const SettingsPage settingsPage = SettingsPage();
+    final SettingsPage settingsPage = SettingsPage(
+      appContextService: appContextService,
+      userService: userService,
+      errorHandler: errorHandler,
+    );
 
     /* AppRouter */
     final AppRouter appRouter = DefaultAppRouter(

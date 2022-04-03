@@ -9,7 +9,6 @@ class DefaultFirstSetupCopier implements FirstSetupCopier {
   }) {
     return FirstSetup(
       nickname: nickname ?? firstSetup.nickname,
-      language: language ?? firstSetup.language
     );
   }
 

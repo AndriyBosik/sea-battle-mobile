@@ -9,10 +9,12 @@ export "presentation/page/poster/poster_page.dart";
 export "presentation/page/rating/rating_page.dart";
 export "presentation/page/settings/settings_page.dart";
 
+export "handler/abstraction/error_handler.dart";
 export "handler/abstraction/error_localizer.dart";
 export "handler/abstraction/first_setup_step_handler.dart";
 export "handler/abstraction/first_setup_copier.dart";
 
+export "handler/implementation/default_error_handler.dart";
 export "handler/implementation/default_first_setup_copier.dart";
 export "handler/implementation/empty_string_error_localizer.dart";
 export "handler/implementation/existing_error_localizer.dart";

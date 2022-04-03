@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sea_battle_presentation/controller/cubit/locale_cubit.dart';
-import 'package:sea_battle_presentation/controller/state/locale/locale_state.dart';
 import 'package:sea_battle_presentation/meta/text_case.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:sea_battle_presentation/presentation/component/locale/locale_builder.dart';
 
 class LocaleText extends StatelessWidget {
   final String _textKey;
@@ -23,17 +21,13 @@ class LocaleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LocaleCubit>(
-      create: (_) => LocaleCubit()..init(),
-      child: BlocBuilder<LocaleCubit, LocaleState>(
-        builder: (context, state) {
-          context.setLocale(state.locale);
-          return Text(
-            _decorateWithTextCase(tr(_textKey)),
-            style: _style
-          );
-        }
-      )
+    return LocaleBuilder(
+      builder: (context, locale) {
+        return Text(
+          _decorateWithTextCase(tr(_textKey)),
+          style: _style
+        );
+      }
     );
   }
 

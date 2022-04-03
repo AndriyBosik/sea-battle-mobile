@@ -15,6 +15,10 @@
     "shop": "Магазин",
     "rating": "Рейтинг",
     "settings": "Налаштування",
+    "language": "Мова",
+    "music": "Музика",
+    "save": "Зберегти",
+    "ok": "Ok",
 
     "emptyStringError": "{field} не повинне бути порожнім",
     "existingError": "Такий(-а) {dataType} уже існує",

@@ -8,35 +8,40 @@ class DefaultAppContextMapper implements AppContextMapper {
   @override
   AppContext firstSetupToAppContext(FirstSetup firstSetup) {
     return AppContext(
-      nickname: firstSetup.nickname
+      nickname: firstSetup.nickname,
+      isMusicOn: true
     );
   }
 
   @override
   AppContextModel fromDomainToModel(AppContext domain) {
     return AppContextModel(
-      nickname: domain.nickname
+      nickname: domain.nickname,
+      isMusicOn: domain.isMusicOn
     );
   }
 
   @override
   AppContextModel fromEntityToModel(AppContextEntity entity) {
     return AppContextModel(
-      nickname: entity.nickname
+      nickname: entity.nickname,
+      isMusicOn: entity.isMusicOn
     );
   }
 
   @override
   AppContext fromModelToDomain(AppContextModel model) {
     return AppContext(
-      nickname: model.nickname
+      nickname: model.nickname,
+      isMusicOn: model.isMusicOn
     );
   }
 
   @override
   AppContextEntity fromModelToEntity(AppContextModel model) {
     return AppContextEntity(
-      nickname: model.nickname
+      nickname: model.nickname ?? "",
+      isMusicOn: model.isMusicOn
     );
   }
 }

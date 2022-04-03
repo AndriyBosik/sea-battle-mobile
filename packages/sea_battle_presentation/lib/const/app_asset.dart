@@ -4,6 +4,8 @@ class AppAsset {
   static const String backgroundImage = "$_imagePrefix/background.jpg";
   static const String boardImage = "$_imagePrefix/board.png";
   static const String bombImage = "$_imagePrefix/bomb.png";
+  static const String checkboxCheckedImage = "$_imagePrefix/checkbox_checked.png";
+  static const String checkboxUncheckedImage = "$_imagePrefix/checkbox_unchecked.png";
   static const String cupImage = "$_imagePrefix/cup.png";
   static const String pirateBoxImage = "$_imagePrefix/pirate_box.png";
   static const String pirateCoinImage = "$_imagePrefix/pirate_coin.png";

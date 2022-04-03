@@ -1,7 +1,9 @@
 class AppContextEntity {
-  final String? nickname;
+  final String nickname;
+  final bool isMusicOn;
 
   AppContextEntity({
-    this.nickname
+    required this.nickname,
+    required this.isMusicOn
   });
 }

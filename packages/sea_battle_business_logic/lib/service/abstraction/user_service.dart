@@ -1,4 +1,3 @@
-import 'package:sea_battle_common/model/page.dart';
 import 'package:sea_battle_common/sea_battle_common.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart';
 
@@ -12,4 +11,9 @@ abstract class UserService {
   });
 
   Future<Page<RatedUser>> getRatedUsers(PageRequest pageRequest);
+
+  Future<AbstractError?> updateNickname({
+    required String oldNickname,
+    required String newNickname
+  });
 }

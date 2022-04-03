@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_logger/easy_logger.dart';
 import 'package:flutter/material.dart';
 
 class App {
@@ -14,5 +15,6 @@ class App {
   Future<void> init() async {
     WidgetsFlutterBinding.ensureInitialized();
     await EasyLocalization.ensureInitialized();
+    EasyLocalization.logger.enableLevels = [LevelMessages.error];
   }
 }

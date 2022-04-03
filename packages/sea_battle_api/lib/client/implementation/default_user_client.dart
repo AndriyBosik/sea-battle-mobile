@@ -97,6 +97,28 @@ class DefaultUserClient implements UserClient {
     );
   }
 
+  @override
+  Future<void> updateNickname({
+    required String oldNickname,
+    required String newNickname
+  }) async {
+    final Uri url = Uri.parse(Api.updateNickname.withBaseUrl(_apiUrl));
+
+    final http.Response response = await _httpClient.patch(
+      url,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: convert.jsonEncode({
+        "oldNickname": oldNickname,
+        "newNickname": newNickname
+      })
+    );
+    if (response.statusCode != 200) {
+      throw UserRequestFailure();
+    }
+  }
+
   List<RatedUserEntity> _getItemsFromJson(List<dynamic> jsonItems) {
     return jsonItems
       .map((item) => item as Map<String, dynamic>)

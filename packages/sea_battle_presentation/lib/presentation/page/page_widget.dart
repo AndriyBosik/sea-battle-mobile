@@ -29,6 +29,7 @@ abstract class PageWidget<T extends BaseCubit> extends StatelessWidget {
         return cubit;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: _backgroundColor,
         body: Stack(
           children: _getBackground() + getContent(context),

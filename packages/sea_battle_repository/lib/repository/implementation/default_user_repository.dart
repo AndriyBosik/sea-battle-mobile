@@ -56,4 +56,14 @@ class DefaultUserRepository implements UserRepository {
           .toList()
     );
   }
+
+  @override
+  Future<void> updateNickname({
+    required String oldNickname,
+    required String newNickname
+  }) async {
+    await _userClient.updateNickname(
+      oldNickname: oldNickname,
+      newNickname: newNickname);
+  }
 }
