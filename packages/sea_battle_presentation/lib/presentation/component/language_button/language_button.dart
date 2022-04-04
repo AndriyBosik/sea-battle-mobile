@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/presentation/component/shadow_text_button/shadow_text_button.dart';
 
 class LanguageButton extends StatelessWidget {
-  final String _text;
+  final TextKey _text;
   final bool _selected;
   final void Function()? _onTap; 
 
   const LanguageButton({
     Key? key,
-    required String text,
+    required TextKey textKey,
     bool selected = false,
     void Function()? onTap
   }):
-    _text = text,
+    _text = textKey,
     _selected = selected,
     _onTap = onTap,
     super(key: key);

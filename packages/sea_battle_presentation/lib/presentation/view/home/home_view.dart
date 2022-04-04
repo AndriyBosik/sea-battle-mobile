@@ -49,7 +49,9 @@ class HomeView extends StatelessWidget {
   Widget _getLoadingChild(HomePageLoadingState state) {
     return ShipProgressBar(
       percentageValue: state.percentageValue,
-      stageDescriptionKey: state.stageDescription,
+      stageDescriptionKey: TextKey(
+        value: state.stageDescription
+      ),
     );
   }
 

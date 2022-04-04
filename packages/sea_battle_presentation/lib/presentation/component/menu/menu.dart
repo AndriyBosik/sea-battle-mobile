@@ -29,11 +29,15 @@ class Menu extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             const MenuItem(
-              textKey: LocaleKey.play,
+              textKey: TextKey(
+                value: LocaleKey.play
+              ),
               child: Play()
             ),
             MenuItem(
-              textKey: LocaleKey.rating,
+              textKey: const TextKey(
+                value: LocaleKey.rating
+              ),
               child: const Rating(),
               onClick: _menuClickListeners.onRatingClick,
             ),
@@ -44,12 +48,16 @@ class Menu extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const MenuItem(
-              textKey: LocaleKey.shop,
+              textKey: TextKey(
+                value: LocaleKey.shop
+              ),
               child: Shop(),
               imagePosition: HorizontalPosition.right,
             ),
             MenuItem(
-              textKey: LocaleKey.settings,
+              textKey: const TextKey(
+                value: LocaleKey.settings
+              ),
               child: const Settings(),
               imagePosition: HorizontalPosition.right,
               onClick: _menuClickListeners.onSettingsClick,

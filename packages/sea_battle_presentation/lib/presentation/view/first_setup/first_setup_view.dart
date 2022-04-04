@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/controller/cubit/first_setup_page_cubit.dart';
 import 'package:sea_battle_presentation/controller/state/first_setup_page/abstract_first_setup_page_state.dart';
@@ -94,7 +95,9 @@ class FirstSetupView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(right: _horizontalPadding, bottom: _verticalPadding),
           child: ArrowButton(
-            textKey: LocaleKey.next,
+            textKey: const TextKey(
+              value: LocaleKey.next
+            ),
             direction: ArrowButtonDirection.right,
             onTap: () {
               cubit.nextStep();
@@ -113,7 +116,9 @@ class FirstSetupView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: _horizontalPadding, bottom: _verticalPadding),
           child: ArrowButton(
-            textKey: LocaleKey.back,
+            textKey: const TextKey(
+              value: LocaleKey.back
+            ),
             direction: ArrowButtonDirection.left,
             onTap: () {
               cubit.backStep();

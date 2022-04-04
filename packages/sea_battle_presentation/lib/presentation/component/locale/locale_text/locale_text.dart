@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/meta/text_case.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_builder.dart';
 
 class LocaleText extends StatelessWidget {
-  final String _textKey;
+  final TextKey _textKey;
   final TextCase _textCase;
   final TextStyle? _style;
 
   const LocaleText({
     Key? key,
-    required String textKey,
+    required TextKey textKey,
     TextCase textCase = TextCase.initial,
     TextStyle? style
   }):
@@ -24,7 +25,7 @@ class LocaleText extends StatelessWidget {
     return LocaleBuilder(
       builder: (context, locale) {
         return Text(
-          _decorateWithTextCase(tr(_textKey)),
+          _decorateWithTextCase(_textKey.localize ? tr(_textKey.value) : _textKey.value),
           style: _style
         );
       }

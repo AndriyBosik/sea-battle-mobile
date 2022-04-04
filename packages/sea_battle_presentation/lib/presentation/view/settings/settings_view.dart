@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/controller/cubit/settings_page_cubit.dart';
@@ -71,7 +72,9 @@ class SettingsView extends StatelessWidget {
             bottom: 10,
             left: 10,
             child: ArrowButton(
-              textKey: LocaleKey.back,
+              textKey: const TextKey(
+                value: LocaleKey.back
+              ),
               direction: ArrowButtonDirection.left,
               onTap: () => Navigator.of(context).pop(),
             )
@@ -80,7 +83,9 @@ class SettingsView extends StatelessWidget {
             bottom: 30,
             right: 30,
             child: ShadowTextButton(
-              textKey: LocaleKey.save,
+              textKey: const TextKey(
+                value: LocaleKey.save
+              ),
               textCase: TextCase.uppercase,
               onTap: () => BlocProvider.of<SettingsPageCubit>(context).updateContextAndUser(nickname: _textController.text),
               style: GoogleFonts.getFont(

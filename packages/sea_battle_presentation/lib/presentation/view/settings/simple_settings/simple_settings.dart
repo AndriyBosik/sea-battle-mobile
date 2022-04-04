@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/controller/cubit/settings_page_cubit.dart';
@@ -38,7 +39,9 @@ class SimpleSettings extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: LocaleText(
-                textKey: LocaleKey.music,
+                textKey: const TextKey(
+                  value: LocaleKey.music
+                ),
                 style: GoogleFonts.getFont(
                   SeaBattleTheme.primaryFont,
                   color: Colors.white,

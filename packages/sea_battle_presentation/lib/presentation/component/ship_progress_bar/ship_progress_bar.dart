@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 import 'package:sea_battle_presentation/presentation/component/ship_progress_bar/pirate_box/pirate_box.dart';
@@ -11,12 +12,12 @@ class ShipProgressBar extends StatelessWidget {
   static const _space = 50;
 
   final double _percentageValue;
-  final String _stageDescriptionKey;
+  final TextKey _stageDescriptionKey;
   
   const ShipProgressBar({
     Key? key,
     required double percentageValue,
-    required String stageDescriptionKey
+    required TextKey stageDescriptionKey
   }):
     _percentageValue = percentageValue,
     _stageDescriptionKey = stageDescriptionKey,

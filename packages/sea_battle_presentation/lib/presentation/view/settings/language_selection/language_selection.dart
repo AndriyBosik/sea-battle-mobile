@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_builder.dart';
@@ -22,7 +23,9 @@ class LanguageSelection extends StatelessWidget {
     return Row(
       children: [
         LocaleText(
-          textKey: LocaleKey.language,
+          textKey: const TextKey(
+            value: LocaleKey.language
+          ),
           style: GoogleFonts.getFont(
             SeaBattleTheme.primaryFont,
             color: Colors.white,
@@ -40,7 +43,10 @@ class LanguageSelection extends StatelessWidget {
         LocaleBuilder(
           builder: (context, locale) {
             return ShadowTextButton(
-              textKey: LocaleUtils.mapCodeToLanguge(locale.languageCode),
+              textKey: TextKey(
+                value: LocaleUtils.mapCodeToLanguge(locale.languageCode),
+                localize: false
+              ),
               onTap: _onTap,
               style: GoogleFonts.getFont(
                 SeaBattleTheme.primaryFont,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sea_battle_domain/sea_battle_domain.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
@@ -123,7 +124,9 @@ class RatingView extends StatelessWidget {
       child: ArrowButton(
         onTap: () => Navigator.of(context).pop(),
         direction: ArrowButtonDirection.left,
-        textKey: LocaleKey.back,
+        textKey: const TextKey(
+          value: LocaleKey.back
+        ),
       )
     );
   }

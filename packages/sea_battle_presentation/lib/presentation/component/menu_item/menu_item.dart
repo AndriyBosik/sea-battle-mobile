@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/meta/horizontal_position.dart';
-import 'package:sea_battle_presentation/meta/text_case.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 
 class MenuItem extends StatelessWidget {
-  final String _textKey;
+  final TextKey _textKey;
   final Widget _child;
   final HorizontalPosition _imagePosition;
   final void Function()? _onClick;
 
   const MenuItem({
     Key? key,
-    required String textKey,
+    required TextKey textKey,
     required Widget child,
     HorizontalPosition imagePosition = HorizontalPosition.left,
     void Function()? onClick

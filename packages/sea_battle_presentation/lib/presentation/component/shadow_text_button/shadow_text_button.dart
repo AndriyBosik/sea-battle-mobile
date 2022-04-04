@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/meta/text_case.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 
 class ShadowTextButton extends StatefulWidget {
-  final String _textKey;
+  final TextKey _textKey;
   final TextCase _textCase;
   final TextStyle? _style;
   final void Function()? _onTap;
 
   const ShadowTextButton({
     Key? key,
-    required String textKey,
+    required TextKey textKey,
     TextCase textCase = TextCase.initial,
     TextStyle? style,
     void Function()? onTap

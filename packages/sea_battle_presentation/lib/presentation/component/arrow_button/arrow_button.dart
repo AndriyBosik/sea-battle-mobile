@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/app_asset.dart';
 import 'package:sea_battle_presentation/const/app_const.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
@@ -11,13 +12,13 @@ import 'package:sea_battle_presentation/presentation/component/animation/scaling
 import 'package:sea_battle_presentation/presentation/component/locale/locale_text/locale_text.dart';
 
 class ArrowButton extends StatefulWidget {
-  final String _textKey;
+  final TextKey _textKey;
   final ArrowButtonDirection _direction;
   final void Function()? _onTap;
 
   const ArrowButton({
     Key? key,
-    required String textKey,
+    required TextKey textKey,
     void Function()? onTap,
     ArrowButtonDirection direction = ArrowButtonDirection.right
   }):

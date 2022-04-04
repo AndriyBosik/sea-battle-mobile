@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/presentation/component/bomb_scroll_box/bomb_scroll_box.dart';
 import 'package:sea_battle_presentation/presentation/component/language_button/language_button.dart';
 import 'package:sea_battle_presentation/presentation/component/locale/locale_builder.dart';
@@ -36,7 +37,10 @@ class LanguagesList extends StatelessWidget {
           _onLanguageTap!(languageCode);
         }
       },
-      text: LocaleUtils.mapCodeToLanguge(languageCode),
+      textKey: TextKey(
+        value: LocaleUtils.mapCodeToLanguge(languageCode),
+        localize: false
+      ),
       selected: selectedLanguageCode.toLowerCase() == languageCode.toLowerCase(),
     );
   }

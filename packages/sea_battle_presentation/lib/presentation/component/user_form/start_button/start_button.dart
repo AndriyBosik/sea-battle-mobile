@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sea_battle_dto/sea_battle_dto.dart';
 import 'package:sea_battle_presentation/const/locale_key.dart';
 import 'package:sea_battle_presentation/const/sea_battle_theme.dart';
 import 'package:sea_battle_presentation/meta/text_case.dart';
@@ -20,7 +21,9 @@ class StartButton extends StatelessWidget {
     return TextButton(
       onPressed: _onPressed,
       child: LocaleText(
-        textKey: LocaleKey.start,
+        textKey: const TextKey(
+          value: LocaleKey.start
+        ),
         textCase: TextCase.uppercase,
         style: GoogleFonts.getFont(
           SeaBattleTheme.primaryFont,
